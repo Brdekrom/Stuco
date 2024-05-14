@@ -9,7 +9,7 @@ internal class StucoDBContext : DbContext
     {
     }
 
-    public DbSet<Stukadoor> Stukadoors { get; set; }
+    public DbSet<Stukadoor> Stukadoren { get; set; }
     public DbSet<Klant> Klanten { get; set; }
     public DbSet<Project> Projecten { get; set; }
 }
