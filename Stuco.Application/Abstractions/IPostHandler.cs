@@ -1,5 +1,6 @@
 ﻿namespace Stuco.Application.Abstractions;
 
-internal interface IPostHandler<T> : IRequestHandler<T>
+public interface IPostHandler<T>
 {
+    Task<T> Execute(T dto);
 }

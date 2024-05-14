@@ -3,10 +3,10 @@ using Stuco.Application.Features.Dtos;
 
 namespace Stuco.Application.Features.Stukadoren.Get;
 
-internal class GetStukadoor : IGetHandler<StukadoorDto>
+public class GetStukadoor : IGetHandler<List<StukadoorDto>>
 {
-    public Task<StukadoorDto> Execute()
+    public async Task<List<StukadoorDto>> Execute()
     {
-        throw new NotImplementedException();
+        return new List<StukadoorDto>();
     }
 }

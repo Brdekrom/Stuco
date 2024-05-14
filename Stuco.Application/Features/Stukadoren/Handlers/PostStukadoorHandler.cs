@@ -5,8 +5,8 @@ namespace Stuco.Application.Features.Stukadoren.Handlers;
 
 public class PostStukadoor : IPostHandler<StukadoorDto>
 {
-    public Task<StukadoorDto> Execute()
+    public async Task<StukadoorDto> Execute(StukadoorDto dto)
     {
-        throw new NotImplementedException();
+        return new StukadoorDto();
     }
 }

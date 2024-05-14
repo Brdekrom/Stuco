@@ -1,5 +1,6 @@
 ﻿namespace Stuco.Application.Abstractions;
 
-internal interface IGetHandler<T> : IRequestHandler<T>
+public interface IGetHandler<T>
 {
+    Task<T> Execute();
 }
