@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
 using Stuco.Application.Features.GetKlanten.Abstraction;
 using Stuco.Application.Features.Klanten.Get;
 using Stuco.Application.Features.Projecten.Abstractions;
 using Stuco.Application.Features.Projecten.Get;
-using Stuco.Application.Features.Stukadoren.Abstractions;
 using Stuco.Application.Features.Stukadoren.Get;
 
 namespace Stuco.Application;
