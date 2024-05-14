@@ -3,7 +3,7 @@ using Stuco.Application.Features.Dtos;
 
 namespace Stuco.Application.Features.Stukadoren.Handlers;
 
-public class PostStukadoor : IRequestHandler<StukadoorDto>
+public class PostStukadoor : IPostHandler<StukadoorDto>
 {
     public Task<StukadoorDto> Execute()
     {

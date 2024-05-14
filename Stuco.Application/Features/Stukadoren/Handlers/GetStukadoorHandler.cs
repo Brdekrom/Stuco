@@ -3,7 +3,7 @@ using Stuco.Application.Features.Dtos;
 
 namespace Stuco.Application.Features.Stukadoren.Get;
 
-internal class GetStukadoor : IRequestHandler<StukadoorDto>
+internal class GetStukadoor : IGetHandler<StukadoorDto>
 {
     public Task<StukadoorDto> Execute()
     {
