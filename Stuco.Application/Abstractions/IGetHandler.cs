@@ -2,5 +2,5 @@
 
 public interface IGetHandler<T>
 {
-    Task<T> Execute();
+    Task<T> ExecuteAsync();
 }

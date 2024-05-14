@@ -3,9 +3,9 @@ using Stuco.Application.Features.Dtos;
 
 namespace Stuco.Application.Features.Stukadoren.Handlers;
 
-public class PostStukadoor : IPostHandler<StukadoorDto>
+public class PostStukadoorHandler : IPostHandler<StukadoorDto>
 {
-    public async Task<StukadoorDto> Execute(StukadoorDto dto)
+    public async Task<StukadoorDto> ExecuteAsync(StukadoorDto dto)
     {
         return new StukadoorDto();
     }

@@ -2,5 +2,5 @@
 
 public interface IGetByIdHandler<T>
 {
-    Task<T> Execute(int id);
+    Task<T> ExecuteAsync(int id);
 }

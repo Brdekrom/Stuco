@@ -1,11 +1,11 @@
 ﻿using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
 
-namespace Stuco.Application.Features.Stukadoren.Get;
+namespace Stuco.Application.Features.Stukadoren.Handlers;
 
-public class GetStukadoorById : IGetByIdHandler<StukadoorDto>
+public class GetStukadoorByIdHandler : IGetByIdHandler<StukadoorDto>
 {
-    public async Task<StukadoorDto> Execute(int id)
+    public async Task<StukadoorDto> ExecuteAsync(int id)
     {
         return new StukadoorDto();
     }

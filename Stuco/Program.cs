@@ -1,7 +1,5 @@
 using Stuco.Api.ApiExtensions;
 using Stuco.Application;
-using Stuco.Application.Features.GetKlanten.Abstraction;
-using Stuco.Application.Features.Projecten.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,25 +42,9 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapGet("/klant", (IGetAllKlanten getAllKlanten) =>
-{
-    return getAllKlanten.Execute();
-});
+app.MapKlantEndpoints();
 
-app.MapGet("/klant/{id:int}", (int id, IGetKlant getKlant) =>
-{
-    return getKlant.Execute(id);
-});
-
-app.MapGet("/project", (IGetAllProjecten getAllProjecten) =>
-{
-    return getAllProjecten.Execute();
-});
-
-app.MapGet("/project/{id:int}", (int id, IGetProject getProject) =>
-{
-    return getProject.Execute(id);
-});
+app.MapProjectEndpoints();
 
 app.MapStukadoorEndpoints();
 

@@ -2,5 +2,5 @@
 
 public interface IPostHandler<T>
 {
-    Task<T> Execute(T dto);
+    Task<T> ExecuteAsync(T dto);
 }
