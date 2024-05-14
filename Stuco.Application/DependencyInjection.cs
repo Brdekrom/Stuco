@@ -18,8 +18,11 @@ public static class DependencyInjection
         services.AddScoped<IGetAllKlanten, GetAllKlanten>();
         services.AddScoped<IGetProject, GetProject>();
         services.AddScoped<IGetAllProjecten, GetAllProjecten>();
-        services.AddScoped<IGetHandler<StukadoorDto>, GetStukadoor>();
-        services.AddScoped<IGetHandler<List<StukadoorDto>>, GetAllStukadoren>();
+
+        services.AddScoped<IGetHandler<List<StukadoorDto>>, GetStukadoor>();
+
+        services.AddScoped<IGetByIdHandler<StukadoorDto>, GetStukadoorById>();
+
         services.AddScoped<IPostHandler<StukadoorDto>, PostStukadoor>();
 
         return services;
