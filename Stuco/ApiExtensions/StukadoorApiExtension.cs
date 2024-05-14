@@ -1,4 +1,5 @@
-﻿using Stuco.Application.Abstractions;
+﻿using Microsoft.AspNetCore.Mvc;
+using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
 
 namespace Stuco.Api.ApiExtensions;
@@ -9,17 +10,17 @@ internal static class StukadoorApiExtension
 
     internal static async void MapStukadoorEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet(StukadorEndpoint, async (IGetHandler<StukadoorDto> handler) =>
+        endpoints.MapGet(StukadorEndpoint, async ([FromServices] IGetHandler<List<StukadoorDto>> handler) =>
         {
             return await handler.ExecuteAsync();
         });
 
-        endpoints.MapGet("{BaseUrl}/{id:int}", async (int id, IGetByIdHandler<List<StukadoorDto>> handler) =>
+        endpoints.MapGet("/stukadoor/{id:int}", async ([FromRoute] int id, [FromServices] IGetByIdHandler<StukadoorDto> handler) =>
         {
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(StukadorEndpoint, async (StukadoorDto stukadoor, IPostHandler<StukadoorDto> handler) =>
+        endpoints.MapPost(StukadorEndpoint, async ([FromBody] StukadoorDto stukadoor, [FromServices] IPostHandler<StukadoorDto> handler) =>
         {
             return await handler.ExecuteAsync(stukadoor);
         });

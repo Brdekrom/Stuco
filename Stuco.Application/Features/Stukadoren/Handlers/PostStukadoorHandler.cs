@@ -7,6 +7,6 @@ public class PostStukadoorHandler : IPostHandler<StukadoorDto>
 {
     public async Task<StukadoorDto> ExecuteAsync(StukadoorDto dto)
     {
-        return new StukadoorDto();
+        return dto;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Stuco.Application.Abstractions;
+﻿using Microsoft.AspNetCore.Mvc;
+using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
 
 namespace Stuco.Api.ApiExtensions;
@@ -9,17 +10,17 @@ public static class KlantApiExtension
 
     public static async void MapKlantEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet(KlantEndpoint, async (IGetHandler<List<KlantDto>> handler) =>
+        endpoints.MapGet(KlantEndpoint, async ([FromServices] IGetHandler<List<KlantDto>> handler) =>
         {
             return await handler.ExecuteAsync();
         });
 
-        endpoints.MapGet("{KlantEndpoint}/{id:int}", async (int id, IGetByIdHandler<List<KlantDto>> handler) =>
+        endpoints.MapGet("/klant/{id:int}", async ([FromRoute] int id, [FromServices] IGetByIdHandler<KlantDto> handler) =>
         {
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(KlantEndpoint, async (KlantDto klant, IPostHandler<KlantDto> handler) =>
+        endpoints.MapPost(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] IPostHandler<KlantDto> handler) =>
         {
             return await handler.ExecuteAsync(klant);
         });
