@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Stuco.Application.Features.Dtos;
 using Stuco.Application.Features.GetKlanten.Abstraction;
 using Stuco.Application.Features.Klanten.Get;
 using Stuco.Application.Features.Projecten.Abstractions;
@@ -16,7 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IGetAllKlanten, GetAllKlanten>();
         services.AddScoped<IGetProject, GetProject>();
         services.AddScoped<IGetAllProjecten, GetAllProjecten>();
-        services.AddScoped<IGetStukadoor, GetStukadoor>();
+        services.AddScoped<IRequestHandler<StukadoorDto>, GetStukadoor>();
         services.AddScoped<IGetAllStukadoren, GetAllStukadoren>();
 
         return services;

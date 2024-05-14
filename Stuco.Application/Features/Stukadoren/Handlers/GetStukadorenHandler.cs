@@ -3,7 +3,7 @@ using Stuco.Application.Features.Stukadoren.Abstractions;
 
 namespace Stuco.Application.Features.Stukadoren.Get;
 
-internal class GetAllStukadoren : IGetAllStukadoren
+internal class GetAllStukadoren : IRequestHandler<List<StukadoorDto>>
 {
     public Task<List<StukadoorDto>> Execute()
     {
