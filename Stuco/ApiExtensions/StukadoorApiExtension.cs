@@ -1,4 +1,5 @@
-﻿using Stuco.Application.Features.Stukadoren.Abstractions;
+﻿using Stuco.Application.Abstractions;
+using Stuco.Application.Features.Dtos;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Api.ApiExtensions;
@@ -7,21 +8,21 @@ internal static class StukadoorApiExtension
 {
     private const string BaseUrl = "/stukadoor";
 
-    internal static void MapStukadoorEndpoints(this IEndpointRouteBuilder endpoints)
+    internal static async void MapStukadoorEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet(BaseUrl, (IGetAllStukadoren getAllStucadoren) =>
+        endpoints.MapGet(BaseUrl, async (IGetHandler<StukadoorDto> handler) =>
         {
-            return getAllStucadoren.Execute();
+            return await handler.Execute();
         });
 
-        endpoints.MapGet("{BaseUrl}/{id:int}", (int id, IGetStukadoor getStukadoor) =>
+        endpoints.MapGet("{BaseUrl}/{id:int}", async (int id, IGetByIdHandler<List<StukadoorDto>> handler) =>
         {
-            return getStukadoor.Execute(id);
+            return await handler.Execute(id);
         });
 
-        endpoints.MapPost(BaseUrl, (Stukadoor stukadoor, ICreateStukadoor createStukadoor) =>
+        endpoints.MapPost(BaseUrl, async (Stukadoor stukadoor, IPostHandler<Stukadoor> handler) =>
         {
-            return createStukadoor.Execute(stukadoor);
+            return await handler.Execute(stukadoor);
         });
     }
 }
