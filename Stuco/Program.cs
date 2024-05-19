@@ -42,6 +42,8 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.MapControllers();
+
 app.MapKlantEndpoints();
 
 app.MapProjectEndpoints();
