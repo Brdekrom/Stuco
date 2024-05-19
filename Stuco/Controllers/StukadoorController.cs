@@ -10,12 +10,12 @@ public class StukadoorController : ControllerBase
 {
     private readonly IGetHandler<List<StukadoorDto>> _getHandler;
     private readonly IGetByIdHandler<StukadoorDto> _getByIdHandler;
-    private readonly IPostHandler<StukadoorDto> _postHandler;
+    private readonly IPostHandler<CreateStukadoorDto, StukadoorDto> _postHandler;
 
     public StukadoorController(
         IGetHandler<List<StukadoorDto>> getHandler,
         IGetByIdHandler<StukadoorDto> getByIdHandler,
-        IPostHandler<StukadoorDto> postHandler)
+        IPostHandler<CreateStukadoorDto, StukadoorDto> postHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
@@ -41,7 +41,7 @@ public class StukadoorController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateStukadoor([FromBody] StukadoorDto stukadoor)
+    public async Task<IActionResult> CreateStukadoor([FromBody] CreateStukadoorDto stukadoor)
     {
         if (stukadoor == null)
         {

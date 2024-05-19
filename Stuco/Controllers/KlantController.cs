@@ -10,12 +10,12 @@ public class KlantController : ControllerBase
 {
     private readonly IGetHandler<List<KlantDto>> _getHandler;
     private readonly IGetByIdHandler<KlantDto> _getByIdHandler;
-    private readonly IPostHandler<KlantDto> _postHandler;
+    private readonly IPostHandler<CreateKlantDto, KlantDto> _postHandler;
 
     public KlantController(
         IGetHandler<List<KlantDto>> getHandler,
         IGetByIdHandler<KlantDto> getByIdHandler,
-        IPostHandler<KlantDto> postHandler)
+        IPostHandler<CreateKlantDto, KlantDto> postHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
@@ -41,7 +41,7 @@ public class KlantController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateKlant([FromBody] KlantDto klant)
+    public async Task<IActionResult> CreateKlant([FromBody] CreateKlantDto klant)
     {
         if (klant == null)
         {

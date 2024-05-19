@@ -20,7 +20,7 @@ public static class ProjectApiExtension
             return handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(ProjectEndpoint, async ([FromBody] ProjectDto project, [FromServices] IPostHandler<ProjectDto> handler) =>
+        endpoints.MapPost(ProjectEndpoint, async ([FromBody] CreateProjectDto project, [FromServices] IPostHandler<CreateProjectDto, ProjectDto> handler) =>
         {
             return await handler.ExecuteAsync(project);
         });

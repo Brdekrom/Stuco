@@ -20,7 +20,7 @@ public static class KlantApiExtension
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] IPostHandler<KlantDto> handler) =>
+        endpoints.MapPost(KlantEndpoint, async ([FromBody] CreateKlantDto klant, [FromServices] IPostHandler<CreateKlantDto, KlantDto> handler) =>
         {
             return await handler.ExecuteAsync(klant);
         });

@@ -10,12 +10,12 @@ public class ProjectController : ControllerBase
 {
     private readonly IGetHandler<List<ProjectDto>> _getHandler;
     private readonly IGetByIdHandler<ProjectDto> _getByIdHandler;
-    private readonly IPostHandler<ProjectDto> _postHandler;
+    private readonly IPostHandler<CreateProjectDto, ProjectDto> _postHandler;
 
     public ProjectController(
         IGetHandler<List<ProjectDto>> getHandler,
         IGetByIdHandler<ProjectDto> getByIdHandler,
-        IPostHandler<ProjectDto> postHandler)
+        IPostHandler<CreateProjectDto, ProjectDto> postHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
@@ -41,14 +41,14 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProject([FromBody] ProjectDto projects)
+    public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto projects)
     {
         if (projects == null)
         {
             return BadRequest();
         }
 
-        var result = await _postHandler.ExecuteAsync(projects);
-        return CreatedAtAction(nameof(GetProjectById), new { id = result.Id }, result);
+        var project = await _postHandler.ExecuteAsync(projects);
+        return CreatedAtAction(nameof(GetProjectById), new { id = project.Id }, project);
     }
 }
