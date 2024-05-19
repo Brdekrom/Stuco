@@ -19,9 +19,9 @@ public static class DependencyInjection
         services.AddScoped<IGetByIdHandler<KlantDto>, GetKlantByIdHandler>();
         services.AddScoped<IGetByIdHandler<ProjectDto>, GetProjectByIdHandler>();
 
-        services.AddScoped<IPostHandler<StukadoorDto>, PostStukadoorHandler>();
-        services.AddScoped<IPostHandler<KlantDto>, PostKlantHandler>();
-        services.AddScoped<IPostHandler<ProjectDto>, PostProjectHandler>();
+        services.AddScoped<IPostHandler<CreateStukadoorDto, StukadoorDto>, PostStukadoorHandler>();
+        services.AddScoped<IPostHandler<CreateKlantDto, KlantDto>, PostKlantHandler>();
+        services.AddScoped<IPostHandler<CreateProjectDto, ProjectDto>, PostProjectHandler>();
 
         return services;
     }
