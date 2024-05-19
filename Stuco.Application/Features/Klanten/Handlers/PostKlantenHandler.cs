@@ -3,10 +3,10 @@ using Stuco.Application.Features.Dtos;
 
 namespace Stuco.Application.Features.Klanten.Handlers;
 
-public class PostKlantHandler : IPostHandler<KlantDto>
+public class PostKlantHandler : IPostHandler<CreateKlantDto, KlantDto>
 {
-    public async Task<KlantDto> ExecuteAsync(KlantDto dto)
+    public async Task<KlantDto> ExecuteAsync(CreateKlantDto dto)
     {
-        return dto;
+        return new KlantDto() { Name = dto.Name };
     }
 }
