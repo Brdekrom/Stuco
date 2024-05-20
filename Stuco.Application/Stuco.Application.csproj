@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Stuco.Domain\Stuco.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Dtos\Update\" />
-  </ItemGroup>
-
 </Project>
