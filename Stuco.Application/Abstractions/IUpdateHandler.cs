@@ -1,5 +1,6 @@
 ﻿namespace Stuco.Application.Abstractions;
 
-internal interface IUpdateHandler<TInput, TResult> : ICreateHandler<TInput, TResult>
+public interface IUpdateHandler<T>
 {
+    Task<bool> ExecuteAsync(T dto);
 }
