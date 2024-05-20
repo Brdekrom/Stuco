@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Dtos\Get\" />
     <Folder Include="Features\Dtos\Update\" />
   </ItemGroup>
 
