@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
 
@@ -8,18 +9,24 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class KlantController : ControllerBase
 {
-    private readonly IGetHandler<List<KlantDto>> _getHandler;
-    private readonly IGetByIdHandler<KlantDto> _getByIdHandler;
-    private readonly ICreateHandler<KlantDto, KlantDto> _postHandler;
+    private readonly IGetHandler<List<Klant>> _getHandler;
+    private readonly IGetByIdHandler<Klant> _getByIdHandler;
+    private readonly ICreateHandler<KlantDto, Klant> _createHandler;
+    private readonly IUpdateHandler<KlantDto> _updateHandler;
+    private readonly IDeleteHandler<Klant> _deleteHandler;
 
     public KlantController(
-        IGetHandler<List<KlantDto>> getHandler,
-        IGetByIdHandler<KlantDto> getByIdHandler,
-        ICreateHandler<KlantDto, KlantDto> postHandler)
+        IGetHandler<List<Klant>> getHandler,
+        IGetByIdHandler<Klant> getByIdHandler,
+        ICreateHandler<KlantDto, Klant> createHandler,
+        IUpdateHandler<KlantDto> updateHandler,
+        IDeleteHandler<Klant> deleteHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
-        _postHandler = postHandler;
+        _createHandler = createHandler;
+        _updateHandler = updateHandler;
+        _deleteHandler = deleteHandler;
     }
 
     [HttpGet]
@@ -48,7 +55,29 @@ public class KlantController : ControllerBase
             return BadRequest();
         }
 
-        var result = await _postHandler.ExecuteAsync(klant);
-        return CreatedAtAction(nameof(GetKlantById), new { id = result.Id }, result);
+        var result = await _createHandler.ExecuteAsync(klant);
+        return CreatedAtAction(nameof(GetKlantById), result);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateKlant([FromBody] KlantDto klant)
+    {
+        if (klant == null || !await _updateHandler.ExecuteAsync(klant))
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteKlant(int id)
+    {
+        if (!await _deleteHandler.ExecuteAsync(id))
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
     }
 }

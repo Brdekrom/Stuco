@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
 
@@ -10,16 +11,22 @@ public class ProjectController : ControllerBase
 {
     private readonly IGetHandler<List<ProjectDto>> _getHandler;
     private readonly IGetByIdHandler<ProjectDto> _getByIdHandler;
-    private readonly ICreateHandler<ProjectDto, ProjectDto> _postHandler;
+    private readonly ICreateHandler<ProjectDto, ProjectDto> _createHandler;
+    private readonly IUpdateHandler<ProjectDto> _updateHandler;
+    private readonly IDeleteHandler<Project> _deleteHandler;
 
     public ProjectController(
         IGetHandler<List<ProjectDto>> getHandler,
         IGetByIdHandler<ProjectDto> getByIdHandler,
-        ICreateHandler<ProjectDto, ProjectDto> postHandler)
+        ICreateHandler<ProjectDto, ProjectDto> postHandler,
+        IUpdateHandler<ProjectDto> updateHandler,
+        IDeleteHandler<Project> deleteHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
-        _postHandler = postHandler;
+        _createHandler = postHandler;
+        _updateHandler = updateHandler;
+        _deleteHandler = deleteHandler;
     }
 
     [HttpGet]
@@ -48,7 +55,29 @@ public class ProjectController : ControllerBase
             return BadRequest();
         }
 
-        var project = await _postHandler.ExecuteAsync(projects);
-        return CreatedAtAction(nameof(GetProjectById), new { id = project.Id }, project);
+        var project = await _createHandler.ExecuteAsync(projects);
+        return CreatedAtAction(nameof(GetProjectById), project);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProject([FromBody] ProjectDto projects)
+    {
+        if (projects == null || !await _updateHandler.ExecuteAsync(projects))
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteProject(int id)
+    {
+        if (!await _deleteHandler.ExecuteAsync(id))
+        {
+            return BadRequest();
+        }
+
+        return NoContent();
     }
 }

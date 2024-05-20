@@ -24,10 +24,7 @@ public static class KlantApiExtension
 
         endpoints.MapPost(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] ICreateHandler<KlantDto, KlantDto> handler) =>
         {
-            var validationResults = new List<ValidationResult>();
-            var validationContext = new ValidationContext(klant);
-
-            if (!Validator.TryValidateObject(klant, validationContext, validationResults, false))
+            if (!ValidateKlant(klant, out var validationResults))
             {
                 return Results.BadRequest(validationResults);
             }
@@ -36,18 +33,37 @@ public static class KlantApiExtension
             return Results.Ok(result);
         });
 
-        endpoints.MapPut("/klant/{id:int}", async ([FromRoute] int id, [FromBody] KlantDto klant, [FromServices] IUpdateHandler<Klant> handler) =>
+        endpoints.MapPut(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] IUpdateHandler<KlantDto> handler) =>
         {
-            var validationResults = new List<ValidationResult>();
-            var validationContext = new ValidationContext(klant);
-
-            if (!Validator.TryValidateObject(klant, validationContext, validationResults, false))
+            if (!ValidateKlant(klant, out var validationResults))
             {
                 return Results.BadRequest(validationResults);
             }
 
-            var result = await handler.ExecuteAsync(id, klant);
-            return Results.Ok(result);
+            var result = await handler.ExecuteAsync(klant);
+            if (!result)
+            {
+                return Results.BadRequest();
+            }
+
+            return Results.Ok();
         });
+
+        endpoints.MapDelete("/klant/{id:int}", async ([FromRoute] int id, [FromServices] IDeleteHandler<Klant> handler) =>
+        {
+            if (!await handler.ExecuteAsync(id))
+            {
+                return Results.BadRequest();
+            }
+
+            return Results.NoContent();
+        });
+    }
+
+    private static bool ValidateKlant(KlantDto klant, out List<ValidationResult> validationResults)
+    {
+        var context = new ValidationContext(klant);
+        validationResults = new List<ValidationResult>();
+        return Validator.TryValidateObject(klant, context, validationResults, true);
     }
 }

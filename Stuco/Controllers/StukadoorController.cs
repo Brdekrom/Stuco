@@ -11,15 +11,21 @@ public class StukadoorController : ControllerBase
     private readonly IGetHandler<List<StukadoorDto>> _getHandler;
     private readonly IGetByIdHandler<StukadoorDto> _getByIdHandler;
     private readonly ICreateHandler<StukadoorDto, StukadoorDto> _postHandler;
+    private readonly IUpdateHandler<StukadoorDto> _updateHandler;
+    private readonly IDeleteHandler<StukadoorDto> _deleteHandler;
 
     public StukadoorController(
         IGetHandler<List<StukadoorDto>> getHandler,
         IGetByIdHandler<StukadoorDto> getByIdHandler,
-        ICreateHandler<StukadoorDto, StukadoorDto> postHandler)
+        ICreateHandler<StukadoorDto, StukadoorDto> postHandler,
+        IUpdateHandler<StukadoorDto> updateHandler,
+        IDeleteHandler<StukadoorDto> deleteHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
         _postHandler = postHandler;
+        _updateHandler = updateHandler;
+        _deleteHandler = deleteHandler;
     }
 
     [HttpGet]
@@ -49,6 +55,26 @@ public class StukadoorController : ControllerBase
         }
 
         var result = await _postHandler.ExecuteAsync(stukadoor);
-        return CreatedAtAction(nameof(GetStukadoorById), new { id = result.Id }, result);
+        return CreatedAtAction(nameof(GetStukadoorById), result);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateStukadoor([FromBody] StukadoorDto stukadoor)
+    {
+        if (stukadoor == null || !await _updateHandler.ExecuteAsync(stukadoor))
+        {
+            return BadRequest();
+        }
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteStukadoor(int id)
+    {
+        if (!await _deleteHandler.ExecuteAsync(id))
+        {
+            return BadRequest();
+        }
+        return NoContent();
     }
 }
