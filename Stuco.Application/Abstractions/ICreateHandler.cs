@@ -1,6 +1,6 @@
 ﻿namespace Stuco.Application.Abstractions;
 
-public interface IPostHandler<TInput, TResult>
+public interface ICreateHandler<TInput, TResult>
 {
     Task<TResult> ExecuteAsync(TInput dto);
 }
