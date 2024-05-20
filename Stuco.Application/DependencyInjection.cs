@@ -28,6 +28,10 @@ public static class DependencyInjection
         services.AddScoped<IUpdateHandler<Klant>, UpdateKlantHandler>();
         services.AddScoped<IUpdateHandler<Project>, UpdateProjectHandler>();
 
+        services.AddScoped<IDeleteHandler<Stukadoor>, DeleteStukadoorHandler>();
+        services.AddScoped<IDeleteHandler<Klant>, DeleteKlantHandler>();
+        services.AddScoped<IDeleteHandler<Project>, DeleteProjectHandler>();
+
         return services;
     }
 }

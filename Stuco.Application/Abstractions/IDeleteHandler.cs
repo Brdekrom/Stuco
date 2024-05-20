@@ -1,5 +1,6 @@
 ﻿namespace Stuco.Application.Abstractions;
 
-public interface IDeleteHandler<T> : IGetByIdHandler<T>
+public interface IDeleteHandler<T>
 {
+    Task<bool> ExecuteAsync(int id);
 }
