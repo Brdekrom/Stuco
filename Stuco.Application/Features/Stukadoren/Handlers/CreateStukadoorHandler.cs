@@ -1,9 +1,9 @@
 ﻿using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Application.Features.Dtos.Create;
 
 namespace Stuco.Application.Features.Stukadoren.Handlers;
 
-public class PostStukadoorHandler : IPostHandler<CreateStukadoorDto, StukadoorDto>
+public class CreateStukadoorHandler : ICreateHandler<CreateStukadoorDto, StukadoorDto>
 {
     public async Task<StukadoorDto> ExecuteAsync(CreateStukadoorDto dto)
     {

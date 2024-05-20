@@ -1,9 +1,9 @@
 ﻿using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Application.Features.Dtos.Create;
 
 namespace Stuco.Application.Features.Projecten.Handlers;
 
-public class PostProjectHandler : IPostHandler<CreateProjectDto, ProjectDto>
+public class CreateProjectHandler : ICreateHandler<CreateProjectDto, ProjectDto>
 {
     public async Task<ProjectDto> ExecuteAsync(CreateProjectDto dto)
     {
