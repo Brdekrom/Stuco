@@ -9,15 +9,15 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class ProjectController : ControllerBase
 {
-    private readonly IGetHandler<List<ProjectDto>> _getHandler;
-    private readonly IGetByIdHandler<ProjectDto> _getByIdHandler;
+    private readonly IGetHandler<List<Project>> _getHandler;
+    private readonly IGetByIdHandler<Project> _getByIdHandler;
     private readonly ICreateHandler<ProjectDto, Project> _createHandler;
     private readonly IUpdateHandler<Project> _updateHandler;
     private readonly IDeleteHandler<Project> _deleteHandler;
 
     public ProjectController(
-        IGetHandler<List<ProjectDto>> getHandler,
-        IGetByIdHandler<ProjectDto> getByIdHandler,
+        IGetHandler<List<Project>> getHandler,
+        IGetByIdHandler<Project> getByIdHandler,
         ICreateHandler<ProjectDto, Project> postHandler,
         IUpdateHandler<Project> updateHandler,
         IDeleteHandler<Project> deleteHandler)

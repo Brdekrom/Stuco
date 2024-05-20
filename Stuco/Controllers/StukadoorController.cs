@@ -9,15 +9,15 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class StukadoorController : ControllerBase
 {
-    private readonly IGetHandler<List<StukadoorDto>> _getHandler;
-    private readonly IGetByIdHandler<StukadoorDto> _getByIdHandler;
+    private readonly IGetHandler<List<Stukadoor>> _getHandler;
+    private readonly IGetByIdHandler<Stukadoor> _getByIdHandler;
     private readonly ICreateHandler<StukadoorDto, Stukadoor> _postHandler;
     private readonly IUpdateHandler<Stukadoor> _updateHandler;
     private readonly IDeleteHandler<Stukadoor> _deleteHandler;
 
     public StukadoorController(
-        IGetHandler<List<StukadoorDto>> getHandler,
-        IGetByIdHandler<StukadoorDto> getByIdHandler,
+        IGetHandler<List<Stukadoor>> getHandler,
+        IGetByIdHandler<Stukadoor> getByIdHandler,
         ICreateHandler<StukadoorDto, Stukadoor> postHandler,
         IUpdateHandler<Stukadoor> updateHandler,
         IDeleteHandler<Stukadoor> deleteHandler)
