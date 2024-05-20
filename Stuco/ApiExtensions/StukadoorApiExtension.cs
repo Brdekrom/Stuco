@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
-using Stuco.Application.Features.Dtos.Create;
 
 namespace Stuco.Api.ApiExtensions;
 
@@ -21,7 +20,7 @@ internal static class StukadoorApiExtension
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(StukadorEndpoint, async ([FromBody] CreateStukadoorDto stukadoor, [FromServices] ICreateHandler<CreateStukadoorDto, StukadoorDto> handler) =>
+        endpoints.MapPost(StukadorEndpoint, async ([FromBody] StukadoorDto stukadoor, [FromServices] ICreateHandler<StukadoorDto, StukadoorDto> handler) =>
         {
             return await handler.ExecuteAsync(stukadoor);
         });

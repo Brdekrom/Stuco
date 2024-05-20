@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos.Create;
+using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Api.ApiExtensions;
@@ -21,18 +22,31 @@ public static class KlantApiExtension
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(KlantEndpoint, async ([FromBody] CreateKlantDto klant, [FromServices] ICreateHandler<CreateKlantDto, KlantDto> handler) =>
+        endpoints.MapPost(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] ICreateHandler<KlantDto, KlantDto> handler) =>
         {
             var validationResults = new List<ValidationResult>();
             var validationContext = new ValidationContext(klant);
 
-            // Data annotations validation
-            if (!Validator.TryValidateObject(klant, validationContext, validationResults, true))
+            if (!Validator.TryValidateObject(klant, validationContext, validationResults, false))
             {
                 return Results.BadRequest(validationResults);
             }
 
             var result = await handler.ExecuteAsync(klant);
+            return Results.Ok(result);
+        });
+
+        endpoints.MapPut("/klant/{id:int}", async ([FromRoute] int id, [FromBody] KlantDto klant, [FromServices] IUpdateHandler<Klant> handler) =>
+        {
+            var validationResults = new List<ValidationResult>();
+            var validationContext = new ValidationContext(klant);
+
+            if (!Validator.TryValidateObject(klant, validationContext, validationResults, false))
+            {
+                return Results.BadRequest(validationResults);
+            }
+
+            var result = await handler.ExecuteAsync(id, klant);
             return Results.Ok(result);
         });
     }

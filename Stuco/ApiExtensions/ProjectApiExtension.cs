@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
-using Stuco.Application.Features.Dtos.Create;
 
 namespace Stuco.Api.ApiExtensions;
 
@@ -21,7 +20,7 @@ public static class ProjectApiExtension
             return handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(ProjectEndpoint, async ([FromBody] CreateProjectDto project, [FromServices] ICreateHandler<CreateProjectDto, ProjectDto> handler) =>
+        endpoints.MapPost(ProjectEndpoint, async ([FromBody] ProjectDto project, [FromServices] ICreateHandler<ProjectDto, ProjectDto> handler) =>
         {
             return await handler.ExecuteAsync(project);
         });

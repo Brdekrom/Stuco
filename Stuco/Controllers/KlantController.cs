@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
-using Stuco.Application.Features.Dtos.Create;
 
 namespace Stuco.Api.Controllers;
 
@@ -11,12 +10,12 @@ public class KlantController : ControllerBase
 {
     private readonly IGetHandler<List<KlantDto>> _getHandler;
     private readonly IGetByIdHandler<KlantDto> _getByIdHandler;
-    private readonly ICreateHandler<CreateKlantDto, KlantDto> _postHandler;
+    private readonly ICreateHandler<KlantDto, KlantDto> _postHandler;
 
     public KlantController(
         IGetHandler<List<KlantDto>> getHandler,
         IGetByIdHandler<KlantDto> getByIdHandler,
-        ICreateHandler<CreateKlantDto, KlantDto> postHandler)
+        ICreateHandler<KlantDto, KlantDto> postHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
@@ -42,7 +41,7 @@ public class KlantController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateKlant([FromBody] CreateKlantDto klant)
+    public async Task<IActionResult> CreateKlant([FromBody] KlantDto klant)
     {
         if (klant == null)
         {
