@@ -1,12 +1,13 @@
 ﻿using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos.Create;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Projecten.Handlers;
 
-public class CreateProjectHandler : ICreateHandler<CreateProjectDto, ProjectDto>
+public class CreateProjectHandler : ICreateHandler<CreateProjectDto, Project>
 {
-    public async Task<ProjectDto> ExecuteAsync(CreateProjectDto dto)
+    public async Task<Project> ExecuteAsync(CreateProjectDto dto)
     {
-        return new ProjectDto() { Name = dto.Name };
+        return new Project() { Name = dto.Name };
     }
 }

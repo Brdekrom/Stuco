@@ -1,12 +1,12 @@
 ﻿using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Projecten.Handlers;
 
-public class GetProjectByIdHandler : IGetByIdHandler<ProjectDto>
+public class GetProjectByIdHandler : IGetByIdHandler<Project>
 {
-    public async Task<ProjectDto> ExecuteAsync(int id)
+    public async Task<Project> ExecuteAsync(int id)
     {
-        return new ProjectDto() { Id = id };
+        return new Project() { Id = id };
     }
 }

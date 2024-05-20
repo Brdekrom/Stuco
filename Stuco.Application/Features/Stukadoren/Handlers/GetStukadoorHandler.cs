@@ -1,12 +1,12 @@
 ﻿using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Stukadoren.Handlers;
 
-public class GetStukadoorHandler : IGetHandler<List<StukadoorDto>>
+public class GetStukadoorHandler : IGetHandler<List<Stukadoor>>
 {
-    public async Task<List<StukadoorDto>> ExecuteAsync()
+    public async Task<List<Stukadoor>> ExecuteAsync()
     {
-        return new List<StukadoorDto>();
+        return new List<Stukadoor>();
     }
 }

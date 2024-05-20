@@ -1,12 +1,12 @@
 ﻿using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Klanten.Handlers;
 
-public class GetKlantHandler : IGetHandler<List<KlantDto>>
+public class GetKlantHandler : IGetHandler<List<Klant>>
 {
-    public async Task<List<KlantDto>> ExecuteAsync()
+    public async Task<List<Klant>> ExecuteAsync()
     {
-        return new List<KlantDto>() { new KlantDto() };
+        return new List<Klant>() { new Klant() };
     }
 }

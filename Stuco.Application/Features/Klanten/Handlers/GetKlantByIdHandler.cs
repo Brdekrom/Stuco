@@ -1,11 +1,11 @@
 ﻿using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Klanten.Handlers;
 
-public class GetKlantByIdHandler : IGetByIdHandler<KlantDto>
+public class GetKlantByIdHandler : IGetByIdHandler<Klant>
 {
-    public async Task<KlantDto> ExecuteAsync(int id)
+    public async Task<Klant> ExecuteAsync(int id)
     {
         return new() { Id = id };
     }
