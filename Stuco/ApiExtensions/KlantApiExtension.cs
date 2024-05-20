@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Application.Features.Dtos.Create;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Api.ApiExtensions;
 
@@ -20,9 +21,19 @@ public static class KlantApiExtension
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(KlantEndpoint, async ([FromBody] CreateKlantDto klant, [FromServices] IPostHandler<CreateKlantDto, KlantDto> handler) =>
+        endpoints.MapPost(KlantEndpoint, async ([FromBody] CreateKlantDto klant, [FromServices] ICreateHandler<CreateKlantDto, KlantDto> handler) =>
         {
-            return await handler.ExecuteAsync(klant);
+            var validationResults = new List<ValidationResult>();
+            var validationContext = new ValidationContext(klant);
+
+            // Data annotations validation
+            if (!Validator.TryValidateObject(klant, validationContext, validationResults, true))
+            {
+                return Results.BadRequest(validationResults);
+            }
+
+            var result = await handler.ExecuteAsync(klant);
+            return Results.Ok(result);
         });
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
+using Stuco.Application.Features.Dtos.Create;
 
 namespace Stuco.Api.Controllers;
 
@@ -10,12 +11,12 @@ public class ProjectController : ControllerBase
 {
     private readonly IGetHandler<List<ProjectDto>> _getHandler;
     private readonly IGetByIdHandler<ProjectDto> _getByIdHandler;
-    private readonly IPostHandler<CreateProjectDto, ProjectDto> _postHandler;
+    private readonly ICreateHandler<CreateProjectDto, ProjectDto> _postHandler;
 
     public ProjectController(
         IGetHandler<List<ProjectDto>> getHandler,
         IGetByIdHandler<ProjectDto> getByIdHandler,
-        IPostHandler<CreateProjectDto, ProjectDto> postHandler)
+        ICreateHandler<CreateProjectDto, ProjectDto> postHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;

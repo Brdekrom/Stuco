@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
+using Stuco.Application.Features.Dtos.Create;
 
 namespace Stuco.Api.Controllers;
 
@@ -10,12 +11,12 @@ public class StukadoorController : ControllerBase
 {
     private readonly IGetHandler<List<StukadoorDto>> _getHandler;
     private readonly IGetByIdHandler<StukadoorDto> _getByIdHandler;
-    private readonly IPostHandler<CreateStukadoorDto, StukadoorDto> _postHandler;
+    private readonly ICreateHandler<CreateStukadoorDto, StukadoorDto> _postHandler;
 
     public StukadoorController(
         IGetHandler<List<StukadoorDto>> getHandler,
         IGetByIdHandler<StukadoorDto> getByIdHandler,
-        IPostHandler<CreateStukadoorDto, StukadoorDto> postHandler)
+        ICreateHandler<CreateStukadoorDto, StukadoorDto> postHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
