@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
 
@@ -10,16 +11,16 @@ public class StukadoorController : ControllerBase
 {
     private readonly IGetHandler<List<StukadoorDto>> _getHandler;
     private readonly IGetByIdHandler<StukadoorDto> _getByIdHandler;
-    private readonly ICreateHandler<StukadoorDto, StukadoorDto> _postHandler;
-    private readonly IUpdateHandler<StukadoorDto> _updateHandler;
-    private readonly IDeleteHandler<StukadoorDto> _deleteHandler;
+    private readonly ICreateHandler<StukadoorDto, Stukadoor> _postHandler;
+    private readonly IUpdateHandler<Stukadoor> _updateHandler;
+    private readonly IDeleteHandler<Stukadoor> _deleteHandler;
 
     public StukadoorController(
         IGetHandler<List<StukadoorDto>> getHandler,
         IGetByIdHandler<StukadoorDto> getByIdHandler,
-        ICreateHandler<StukadoorDto, StukadoorDto> postHandler,
-        IUpdateHandler<StukadoorDto> updateHandler,
-        IDeleteHandler<StukadoorDto> deleteHandler)
+        ICreateHandler<StukadoorDto, Stukadoor> postHandler,
+        IUpdateHandler<Stukadoor> updateHandler,
+        IDeleteHandler<Stukadoor> deleteHandler)
     {
         _getHandler = getHandler;
         _getByIdHandler = getByIdHandler;
@@ -59,7 +60,7 @@ public class StukadoorController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateStukadoor([FromBody] StukadoorDto stukadoor)
+    public async Task<IActionResult> UpdateStukadoor([FromBody] Stukadoor stukadoor)
     {
         if (stukadoor == null || !await _updateHandler.ExecuteAsync(stukadoor))
         {

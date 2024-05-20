@@ -22,9 +22,11 @@ public static class KlantApiExtension
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] ICreateHandler<KlantDto, KlantDto> handler) =>
+        endpoints.MapPost(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] ICreateHandler<KlantDto, Klant> handler) =>
         {
-            if (!ValidateKlant(klant, out var validationResults))
+            var context = new ValidationContext(klant);
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(klant, context, validationResults, true))
             {
                 return Results.BadRequest(validationResults);
             }
@@ -33,9 +35,11 @@ public static class KlantApiExtension
             return Results.Ok(result);
         });
 
-        endpoints.MapPut(KlantEndpoint, async ([FromBody] KlantDto klant, [FromServices] IUpdateHandler<KlantDto> handler) =>
+        endpoints.MapPut(KlantEndpoint, async ([FromBody] Klant klant, [FromServices] IUpdateHandler<Klant> handler) =>
         {
-            if (!ValidateKlant(klant, out var validationResults))
+            var context = new ValidationContext(klant);
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(klant, context, validationResults, true))
             {
                 return Results.BadRequest(validationResults);
             }
@@ -58,12 +62,5 @@ public static class KlantApiExtension
 
             return Results.NoContent();
         });
-    }
-
-    private static bool ValidateKlant(KlantDto klant, out List<ValidationResult> validationResults)
-    {
-        var context = new ValidationContext(klant);
-        validationResults = new List<ValidationResult>();
-        return Validator.TryValidateObject(klant, context, validationResults, true);
     }
 }

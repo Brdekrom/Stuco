@@ -22,9 +22,11 @@ internal static class StukadoorApiExtension
             return await handler.ExecuteAsync(id);
         });
 
-        endpoints.MapPost(StukadorEndpoint, async ([FromBody] StukadoorDto stukadoor, [FromServices] ICreateHandler<StukadoorDto, StukadoorDto> handler) =>
+        endpoints.MapPost(StukadorEndpoint, async ([FromBody] StukadoorDto stukadoor, [FromServices] ICreateHandler<StukadoorDto, Stukadoor> handler) =>
         {
-            if (!ValidateStukadoor(stukadoor, out var validationResults))
+            var context = new ValidationContext(stukadoor);
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(stukadoor, context, validationResults, true))
             {
                 return Results.BadRequest(validationResults);
             }
@@ -33,9 +35,11 @@ internal static class StukadoorApiExtension
             return Results.Ok(result);
         });
 
-        endpoints.MapPut(StukadorEndpoint, async ([FromBody] StukadoorDto stukadoor, [FromServices] IUpdateHandler<StukadoorDto> handler) =>
+        endpoints.MapPut(StukadorEndpoint, async ([FromBody] Stukadoor stukadoor, [FromServices] IUpdateHandler<Stukadoor> handler) =>
         {
-            if (!ValidateStukadoor(stukadoor, out var validationResults))
+            var context = new ValidationContext(stukadoor);
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(stukadoor, context, validationResults, true))
             {
                 return Results.BadRequest(validationResults);
             }
@@ -58,12 +62,5 @@ internal static class StukadoorApiExtension
 
             return Results.NoContent();
         });
-    }
-
-    private static bool ValidateStukadoor(StukadoorDto stukadoor, out List<ValidationResult> validationResults)
-    {
-        var context = new ValidationContext(stukadoor);
-        validationResults = new List<ValidationResult>();
-        return Validator.TryValidateObject(stukadoor, context, validationResults, true);
     }
 }

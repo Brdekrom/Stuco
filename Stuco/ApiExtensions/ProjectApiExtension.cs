@@ -24,7 +24,9 @@ public static class ProjectApiExtension
 
         endpoints.MapPost(ProjectEndpoint, async ([FromBody] ProjectDto project, [FromServices] ICreateHandler<ProjectDto, Project> handler) =>
         {
-            if (!ValidateProject(project, out var validationResults))
+            var context = new ValidationContext(project);
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(project, context, validationResults, true))
             {
                 return Results.BadRequest(validationResults);
             }
@@ -33,9 +35,11 @@ public static class ProjectApiExtension
             return Results.Ok(result);
         });
 
-        endpoints.MapPut(ProjectEndpoint, async ([FromBody] ProjectDto project, [FromServices] IUpdateHandler<ProjectDto> handler) =>
+        endpoints.MapPut(ProjectEndpoint, async ([FromBody] Project project, [FromServices] IUpdateHandler<Project> handler) =>
         {
-            if (!ValidateProject(project, out var validationResults))
+            var context = new ValidationContext(project);
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(project, context, validationResults, true))
             {
                 return Results.BadRequest(validationResults);
             }
@@ -53,12 +57,5 @@ public static class ProjectApiExtension
 
             return Results.NoContent();
         });
-    }
-
-    private static bool ValidateProject(ProjectDto project, out IEnumerable<ValidationResult> validationResults)
-    {
-        var context = new ValidationContext(project);
-        validationResults = new List<ValidationResult>();
-        return Validator.TryValidateObject(project, context, (ICollection<ValidationResult>)validationResults, true);
     }
 }

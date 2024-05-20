@@ -12,14 +12,14 @@ public class KlantController : ControllerBase
     private readonly IGetHandler<List<Klant>> _getHandler;
     private readonly IGetByIdHandler<Klant> _getByIdHandler;
     private readonly ICreateHandler<KlantDto, Klant> _createHandler;
-    private readonly IUpdateHandler<KlantDto> _updateHandler;
+    private readonly IUpdateHandler<Klant> _updateHandler;
     private readonly IDeleteHandler<Klant> _deleteHandler;
 
     public KlantController(
         IGetHandler<List<Klant>> getHandler,
         IGetByIdHandler<Klant> getByIdHandler,
         ICreateHandler<KlantDto, Klant> createHandler,
-        IUpdateHandler<KlantDto> updateHandler,
+        IUpdateHandler<Klant> updateHandler,
         IDeleteHandler<Klant> deleteHandler)
     {
         _getHandler = getHandler;
@@ -60,7 +60,7 @@ public class KlantController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateKlant([FromBody] KlantDto klant)
+    public async Task<IActionResult> UpdateKlant([FromBody] Klant klant)
     {
         if (klant == null || !await _updateHandler.ExecuteAsync(klant))
         {

@@ -11,15 +11,15 @@ public class ProjectController : ControllerBase
 {
     private readonly IGetHandler<List<ProjectDto>> _getHandler;
     private readonly IGetByIdHandler<ProjectDto> _getByIdHandler;
-    private readonly ICreateHandler<ProjectDto, ProjectDto> _createHandler;
-    private readonly IUpdateHandler<ProjectDto> _updateHandler;
+    private readonly ICreateHandler<ProjectDto, Project> _createHandler;
+    private readonly IUpdateHandler<Project> _updateHandler;
     private readonly IDeleteHandler<Project> _deleteHandler;
 
     public ProjectController(
         IGetHandler<List<ProjectDto>> getHandler,
         IGetByIdHandler<ProjectDto> getByIdHandler,
-        ICreateHandler<ProjectDto, ProjectDto> postHandler,
-        IUpdateHandler<ProjectDto> updateHandler,
+        ICreateHandler<ProjectDto, Project> postHandler,
+        IUpdateHandler<Project> updateHandler,
         IDeleteHandler<Project> deleteHandler)
     {
         _getHandler = getHandler;
@@ -60,7 +60,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateProject([FromBody] ProjectDto projects)
+    public async Task<IActionResult> UpdateProject([FromBody] Project projects)
     {
         if (projects == null || !await _updateHandler.ExecuteAsync(projects))
         {
