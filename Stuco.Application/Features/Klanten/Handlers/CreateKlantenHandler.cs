@@ -1,13 +1,12 @@
 ﻿using Stuco.Application.Abstractions;
-
-using Stuco.Application.Features.Dtos.Create;
+using Stuco.Application.Features.Dtos;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Klanten.Handlers;
 
-public class PostKlantHandler : ICreateHandler<CreateKlantDto, Klant>
+public class PostKlantHandler : ICreateHandler<KlantDto, Klant>
 {
-    public async Task<Klant> ExecuteAsync(CreateKlantDto dto)
+    public async Task<Klant> ExecuteAsync(KlantDto dto)
     {
         return new Klant() { Name = dto.Name };
     }
