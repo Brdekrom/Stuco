@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Stuco.Application.Abstractions;
 using Stuco.Application.Features.Dtos;
+using Stuco.Application.Features.Dtos.Create;
 using Stuco.Application.Features.Klanten.Handlers;
 using Stuco.Application.Features.Projecten.Handlers;
 using Stuco.Application.Features.Stukadoren.Handlers;
@@ -19,9 +20,9 @@ public static class DependencyInjection
         services.AddScoped<IGetByIdHandler<KlantDto>, GetKlantByIdHandler>();
         services.AddScoped<IGetByIdHandler<ProjectDto>, GetProjectByIdHandler>();
 
-        services.AddScoped<IPostHandler<CreateStukadoorDto, StukadoorDto>, PostStukadoorHandler>();
-        services.AddScoped<IPostHandler<CreateKlantDto, KlantDto>, PostKlantHandler>();
-        services.AddScoped<IPostHandler<CreateProjectDto, ProjectDto>, PostProjectHandler>();
+        services.AddScoped<ICreateHandler<CreateStukadoorDto, StukadoorDto>, CreateStukadoorHandler>();
+        services.AddScoped<ICreateHandler<CreateKlantDto, KlantDto>, PostKlantHandler>();
+        services.AddScoped<ICreateHandler<CreateProjectDto, ProjectDto>, CreateProjectHandler>();
 
         return services;
     }
