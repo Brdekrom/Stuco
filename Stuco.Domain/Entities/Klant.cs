@@ -3,5 +3,5 @@
 public class Klant : EntityBase
 {
     public string Name { get; set; }
-    public List<Project> Projecten { get; set; }
+    public List<Project> Projecten { get; set; } = new List<Project>();
 }
