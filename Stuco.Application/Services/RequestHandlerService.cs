@@ -37,7 +37,7 @@ public class RequestHandlerService : IRequestHandlerService
 
     public async Task<bool> Put<T>(IUpdateHandler<T> handler, T dto)
     {
-        return await handler.ExecuteAsync(entity);
+        return await handler.ExecuteAsync(dto);
     }
 
     public async Task<bool> Delete<T>(IDeleteHandler<T> handler, int id)
