@@ -3,7 +3,7 @@ using Stuco.Domain.Entities;
 
 namespace Stuco.Infrastructure.Persistence;
 
-internal class StucoDBContext : DbContext
+public class StucoDBContext : DbContext
 {
     public StucoDBContext(DbContextOptions<StucoDBContext> options) : base(options)
     {
