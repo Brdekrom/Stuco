@@ -1,8 +1,12 @@
-﻿namespace Stuco.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Stuco.Domain.Entities;
 
 public class Project : EntityBase
 {
+    [MaxLength(20)]
     public string Name { get; set; }
+
     public int KlantId { get; set; }
 
     // Navigation properties
