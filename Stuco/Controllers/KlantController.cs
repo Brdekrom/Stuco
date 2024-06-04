@@ -56,12 +56,13 @@ public class KlantController : ControllerBase
         }
 
         var result = await _createHandler.ExecuteAsync(klant);
-        return CreatedAtAction(nameof(GetKlantById), result);
+        return Ok(result);
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateKlant([FromBody] Klant klant)
     {
+        // TODO: Handler needs a DTO
         if (klant == null || !await _updateHandler.ExecuteAsync(klant))
         {
             return BadRequest();
