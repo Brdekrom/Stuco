@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stuco.Application.Abstractions;
+using Stuco.Domain.Entities;
 using Stuco.Infrastructure.Persistence;
+using Stuco.Infrastructure.Repositories;
 
 namespace Stuco.Infrastructure;
 
@@ -9,7 +12,7 @@ public static class DependencyInjection
 {
     public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, bool isDev)
     {
-        if (isDev)
+        if (!isDev)
         {
             services.AddDbContext<StucoDBContext>(options =>
             {
@@ -20,12 +23,12 @@ public static class DependencyInjection
         {
             services.AddDbContext<StucoDBContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseMySQL(configuration.GetConnectionString("DefaultConnection"));
             });
         }
 
-        //services.AddScoped<IStukadoorRepository, StukadoorRepository>();
-        //services.AddScoped<IKlantRepository, KlantRepository>();
-        //services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IRepository<Klant>, KlantRepository>();
+        services.AddScoped<IRepository<Project>, ProjectRepository>();
+        services.AddScoped<IRepository<Stukadoor>, StukadoorRepository>();
     }
 }
