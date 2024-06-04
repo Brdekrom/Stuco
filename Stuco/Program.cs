@@ -1,5 +1,7 @@
 using Stuco.Api.ApiExtensions;
 using Stuco.Application;
+using Stuco.Application.Mappers;
+using Stuco.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Stuco", Version = "v1" });
 });
+
+builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.IsDevelopment());
+
+builder.Services.AddAutoMapper(typeof(KlantProfile).Assembly);
 
 var app = builder.Build();
 
