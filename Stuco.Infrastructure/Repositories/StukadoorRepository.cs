@@ -1,4 +1,5 @@
-﻿using Stuco.Application.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using Stuco.Application.Abstractions;
 using Stuco.Domain.Entities;
 using Stuco.Infrastructure.Persistence;
 
@@ -22,7 +23,11 @@ public class StukadoorRepository : IRepository<Stukadoor>
 
     public Task DeleteAsync(int id)
     {
-        var stukadoor = _context.Stukadoren.FirstOrDefault(s => s.Id == id) ?? throw new Exception("Stukadoor not found");
+        var stukadoor = _context.Stukadoren
+            .Include(s => s.Project)
+            .ToList()
+            .FirstOrDefault(s => s.Id == id) ?? throw new Exception("Stukadoor not found");
+
         _context.Stukadoren.Remove(stukadoor);
         _context.SaveChanges();
         return Task.CompletedTask;
@@ -34,11 +39,18 @@ public class StukadoorRepository : IRepository<Stukadoor>
     }
 
     public Task<Stukadoor> GetByIdAsync(int id)
-        => Task.FromResult(_context.Stukadoren.FirstOrDefault(stukadoor => stukadoor.Id == id));
+    {
+        return Task.FromResult(_context.Stukadoren.
+                Include(stukadoor => stukadoor.Project)
+                .ToList()
+                .FirstOrDefault(stukadoor => stukadoor.Id == id));
+    }
 
     public Task<Stukadoor> UpdateAsync(Stukadoor stukadoor)
     {
-        var toUpdateStukadoor = _context.Stukadoren.FirstOrDefault(s => s.Id == stukadoor.Id) ?? throw new Exception("Stukadoor not found");
+        var toUpdateStukadoor = _context.Stukadoren
+            .FirstOrDefault(s => s.Id == stukadoor.Id) ?? throw new Exception("Stukadoor not found");
+
         toUpdateStukadoor.Name = stukadoor.Name;
         toUpdateStukadoor.Project = stukadoor.Project;
         _context.SaveChanges();

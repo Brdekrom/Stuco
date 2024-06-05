@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Application.Dtos;
+using Stuco.Application.Dtos.Klant;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
@@ -9,37 +10,24 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class KlantController : ControllerBase
 {
-    private readonly IGetHandler<List<Klant>> _getHandler;
-    private readonly IGetByIdHandler<Klant> _getByIdHandler;
-    private readonly ICreateHandler<KlantDto, Klant> _createHandler;
-    private readonly IUpdateHandler<Klant> _updateHandler;
-    private readonly IDeleteHandler<Klant> _deleteHandler;
+    private readonly IRequestHandler<DtoBase, Klant> _handler;
 
-    public KlantController(
-        IGetHandler<List<Klant>> getHandler,
-        IGetByIdHandler<Klant> getByIdHandler,
-        ICreateHandler<KlantDto, Klant> createHandler,
-        IUpdateHandler<Klant> updateHandler,
-        IDeleteHandler<Klant> deleteHandler)
+    public KlantController(IRequestHandler<DtoBase, Klant> handler)
     {
-        _getHandler = getHandler;
-        _getByIdHandler = getByIdHandler;
-        _createHandler = createHandler;
-        _updateHandler = updateHandler;
-        _deleteHandler = deleteHandler;
+        _handler = handler;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetKlanten()
     {
-        var result = await _getHandler.ExecuteAsync();
+        var result = await _handler.GetAll();
         return Ok(result);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetKlantById(int id)
     {
-        var result = await _getByIdHandler.ExecuteAsync(id);
+        var result = await _handler.Get(id);
         if (result == null)
         {
             return NotFound();
@@ -48,22 +36,21 @@ public class KlantController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateKlant([FromBody] KlantDto klant)
+    public async Task<IActionResult> CreateKlant([FromBody] CreateKlantDto klant)
     {
         if (klant == null)
         {
             return BadRequest();
         }
 
-        var result = await _createHandler.ExecuteAsync(klant);
+        var result = await _handler.Create(klant);
         return Ok(result);
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateKlant([FromBody] Klant klant)
+    public async Task<IActionResult> UpdateKlant([FromBody] UpdateKlantDto klant)
     {
-        // TODO: Handler needs a DTO
-        if (klant == null || !await _updateHandler.ExecuteAsync(klant))
+        if (klant == null || !await _handler.Update(klant))
         {
             return BadRequest();
         }
@@ -74,7 +61,7 @@ public class KlantController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteKlant(int id)
     {
-        if (!await _deleteHandler.ExecuteAsync(id))
+        if (!await _handler.Delete(id))
         {
             return BadRequest();
         }

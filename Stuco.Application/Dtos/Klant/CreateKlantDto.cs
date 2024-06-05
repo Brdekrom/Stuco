@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Stuco.Application.Features.Dtos;
+namespace Stuco.Application.Dtos.Klant;
 
-public class KlantDto
+public sealed class CreateKlantDto : DtoBase
 {
     [Required]
     [MinLength(2)]

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Stuco.Application.Features.Dtos;
+using Stuco.Application.Dtos.Klant;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Mappers;
@@ -10,8 +10,8 @@ public class KlantProfile : Profile
     {
         var config = new MapperConfiguration(cfg =>
         {
-            CreateMap<KlantDto, Klant>();
+            CreateMap<CreateKlantDto, Klant>();
+            CreateMap<UpdateKlantDto, Klant>();
         });
-
     }
 }

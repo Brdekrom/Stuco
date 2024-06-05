@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Stuco.Application.Features.Dtos;
+namespace Stuco.Application.Dtos.Stukadoor;
 
-public class StukadoorDto()
+public sealed class CreateStukadoorDto() : DtoBase
 {
     [Required]
     [MinLength(2)]

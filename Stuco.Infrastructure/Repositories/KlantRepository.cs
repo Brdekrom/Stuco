@@ -1,4 +1,5 @@
-﻿using Stuco.Application.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using Stuco.Application.Abstractions;
 using Stuco.Domain.Entities;
 using Stuco.Infrastructure.Persistence;
 
@@ -22,7 +23,8 @@ public class KlantRepository : IRepository<Klant>
 
     public Task DeleteAsync(int id)
     {
-        var klant = _context.Klanten.FirstOrDefault(k => k.Id == id) ?? throw new Exception("Klant not found");
+        var klant = _context.Klanten
+            .FirstOrDefault(k => k.Id == id) ?? throw new Exception("Klant not found");
         _context.Klanten.Remove(klant);
         _context.SaveChanges();
         return Task.CompletedTask;
@@ -30,15 +32,22 @@ public class KlantRepository : IRepository<Klant>
 
     public Task<List<Klant>> GetAllAsync()
     {
-        return Task.FromResult(_context.Klanten.ToList());
+        return Task.FromResult(_context.Klanten
+            .Include(x => x.Projecten)
+            .ToList());
     }
 
     public Task<Klant> GetByIdAsync(int id)
-        => Task.FromResult(_context.Klanten.FirstOrDefault(klant => klant.Id == id));
+        => Task.FromResult(_context.Klanten
+            .Include(x => x.Projecten)
+            .ToList()
+            .FirstOrDefault(klant => klant.Id == id));
 
     public Task<Klant> UpdateAsync(Klant klant)
     {
-        var toUpdateKlant = _context.Klanten.FirstOrDefault(k => k.Id == klant.Id) ?? throw new Exception("Klant not found");
+        var toUpdateKlant = _context.Klanten
+            .Include(x => x.Projecten)
+            .FirstOrDefault(k => k.Id == klant.Id) ?? throw new Exception("Klant not found");
         toUpdateKlant.Name = toUpdateKlant.Name;
         toUpdateKlant.Projecten = toUpdateKlant.Projecten;
         _context.SaveChanges();

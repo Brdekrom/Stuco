@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Application.Dtos;
+using Stuco.Application.Dtos.Project;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
@@ -9,37 +10,24 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class ProjectController : ControllerBase
 {
-    private readonly IGetHandler<List<Project>> _getHandler;
-    private readonly IGetByIdHandler<Project> _getByIdHandler;
-    private readonly ICreateHandler<ProjectDto, Project> _createHandler;
-    private readonly IUpdateHandler<Project> _updateHandler;
-    private readonly IDeleteHandler<Project> _deleteHandler;
+    private readonly IRequestHandler<DtoBase, Project> _handler;
 
-    public ProjectController(
-        IGetHandler<List<Project>> getHandler,
-        IGetByIdHandler<Project> getByIdHandler,
-        ICreateHandler<ProjectDto, Project> postHandler,
-        IUpdateHandler<Project> updateHandler,
-        IDeleteHandler<Project> deleteHandler)
+    public ProjectController(IRequestHandler<DtoBase, Project> requestHandler)
     {
-        _getHandler = getHandler;
-        _getByIdHandler = getByIdHandler;
-        _createHandler = postHandler;
-        _updateHandler = updateHandler;
-        _deleteHandler = deleteHandler;
+        _handler = requestHandler;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetProjects()
     {
-        var projects = await _getHandler.ExecuteAsync();
+        var projects = await _handler.GetAll();
         return Ok(projects);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetProjectById(int id)
     {
-        var projects = await _getByIdHandler.ExecuteAsync(id);
+        var projects = await _handler.Get(id);
         if (projects == null)
         {
             return NotFound();
@@ -48,21 +36,21 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProject([FromBody] ProjectDto projects)
+    public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto projects)
     {
         if (projects == null)
         {
             return BadRequest();
         }
 
-        var project = await _createHandler.ExecuteAsync(projects);
-        return CreatedAtAction(nameof(GetProjectById), project);
+        var project = await _handler.Create(projects);
+        return new OkObjectResult(project);
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateProject([FromBody] Project projects)
+    public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectDto projects)
     {
-        if (projects == null || !await _updateHandler.ExecuteAsync(projects))
+        if (projects == null || !await _handler.Update(projects))
         {
             return BadRequest();
         }
@@ -73,7 +61,7 @@ public class ProjectController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteProject(int id)
     {
-        if (!await _deleteHandler.ExecuteAsync(id))
+        if (!await _handler.Delete(id))
         {
             return BadRequest();
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Features.Dtos;
+using Stuco.Application.Dtos;
+using Stuco.Application.Dtos.Stukadoor;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
@@ -9,37 +10,24 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class StukadoorController : ControllerBase
 {
-    private readonly IGetHandler<List<Stukadoor>> _getHandler;
-    private readonly IGetByIdHandler<Stukadoor> _getByIdHandler;
-    private readonly ICreateHandler<StukadoorDto, Stukadoor> _postHandler;
-    private readonly IUpdateHandler<Stukadoor> _updateHandler;
-    private readonly IDeleteHandler<Stukadoor> _deleteHandler;
+    private readonly IRequestHandler<DtoBase, Stukadoor> _handler;
 
-    public StukadoorController(
-        IGetHandler<List<Stukadoor>> getHandler,
-        IGetByIdHandler<Stukadoor> getByIdHandler,
-        ICreateHandler<StukadoorDto, Stukadoor> postHandler,
-        IUpdateHandler<Stukadoor> updateHandler,
-        IDeleteHandler<Stukadoor> deleteHandler)
+    public StukadoorController(IRequestHandler<DtoBase, Stukadoor> handler)
     {
-        _getHandler = getHandler;
-        _getByIdHandler = getByIdHandler;
-        _postHandler = postHandler;
-        _updateHandler = updateHandler;
-        _deleteHandler = deleteHandler;
+        _handler = handler;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetStukadoors()
     {
-        var result = await _getHandler.ExecuteAsync();
+        var result = await _handler.GetAll();
         return Ok(result);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetStukadoorById(int id)
     {
-        var result = await _getByIdHandler.ExecuteAsync(id);
+        var result = await _handler.Get(id);
         if (result == null)
         {
             return NotFound();
@@ -48,21 +36,21 @@ public class StukadoorController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateStukadoor([FromBody] StukadoorDto stukadoor)
+    public async Task<IActionResult> CreateStukadoor([FromBody] CreateStukadoorDto stukadoor)
     {
         if (stukadoor == null)
         {
             return BadRequest();
         }
 
-        var result = await _postHandler.ExecuteAsync(stukadoor);
+        var result = await _handler.Create(stukadoor);
         return CreatedAtAction(nameof(GetStukadoorById), result);
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateStukadoor([FromBody] Stukadoor stukadoor)
+    public async Task<IActionResult> UpdateStukadoor([FromBody] UpdateStukadoorDto stukadoor)
     {
-        if (stukadoor == null || !await _updateHandler.ExecuteAsync(stukadoor))
+        if (stukadoor == null || !await _handler.Update(stukadoor))
         {
             return BadRequest();
         }
@@ -72,7 +60,7 @@ public class StukadoorController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteStukadoor(int id)
     {
-        if (!await _deleteHandler.ExecuteAsync(id))
+        if (!await _handler.Delete(id))
         {
             return BadRequest();
         }
