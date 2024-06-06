@@ -34,7 +34,9 @@ public class ProjectRepository : IRepository<Project>
 
     public Task<List<Project>> GetAllAsync()
     {
-        return Task.FromResult(_context.Projecten.ToList());
+        return Task.FromResult(_context.Projecten
+            .Include(x => x.Stukadoren)
+            .ToList());
     }
 
     public Task<Project> GetByIdAsync(int id)

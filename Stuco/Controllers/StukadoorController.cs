@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Stukadoor;
-using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
 
@@ -10,9 +8,9 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class StukadoorController : ControllerBase
 {
-    private readonly IRequestHandler<DtoBase, Stukadoor> _handler;
+    private readonly IRequestHandler<DtoBase, ViewStukadoorDto> _handler;
 
-    public StukadoorController(IRequestHandler<DtoBase, Stukadoor> handler)
+    public StukadoorController(IRequestHandler<DtoBase, ViewStukadoorDto> handler)
     {
         _handler = handler;
     }
@@ -44,7 +42,7 @@ public class StukadoorController : ControllerBase
         }
 
         var result = await _handler.Create(stukadoor);
-        return CreatedAtAction(nameof(GetStukadoorById), result);
+        return new OkObjectResult(result);
     }
 
     [HttpPut]

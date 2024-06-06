@@ -5,7 +5,6 @@ using Stuco.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddApplicationServices();
@@ -14,7 +13,7 @@ builder.Services.AddAuthentication();
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddEndpointsApiExplorer();  // Make sure this line is present
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {

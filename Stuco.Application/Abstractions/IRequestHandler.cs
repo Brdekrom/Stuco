@@ -1,8 +1,6 @@
-﻿using Stuco.Domain.Entities;
+﻿namespace Stuco.Application.Abstractions;
 
-namespace Stuco.Application.Abstractions;
-
-public interface IRequestHandler<TIn, TOut> where TOut : EntityBase
+public interface IRequestHandler<TIn, TOut> where TOut : DtoBase
 {
     Task<TOut> Create(TIn dto);
 

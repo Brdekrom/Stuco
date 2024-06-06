@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Stukadoor;
-using Stuco.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Api.ApiExtensions;
@@ -13,17 +11,17 @@ internal static class StukadoorApiExtension
 
     internal static async void MapStukadoorEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet(StukadorEndpoint, async ([FromServices] IRequestHandler<DtoBase, Stukadoor> handler) =>
+        endpoints.MapGet(StukadorEndpoint, async ([FromServices] IRequestHandler<DtoBase, ViewStukadoorDto> handler) =>
         {
             return await handler.GetAll();
         });
 
-        endpoints.MapGet("/stukadoor/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, Stukadoor> handler) =>
+        endpoints.MapGet("/stukadoor/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, ViewStukadoorDto> handler) =>
         {
             return await handler.Get(id);
         });
 
-        endpoints.MapPost(StukadorEndpoint, async ([FromBody] CreateStukadoorDto stukadoor, [FromServices] IRequestHandler<DtoBase, Stukadoor> handler) =>
+        endpoints.MapPost(StukadorEndpoint, async ([FromBody] CreateStukadoorDto stukadoor, [FromServices] IRequestHandler<DtoBase, ViewStukadoorDto> handler) =>
         {
             var context = new ValidationContext(stukadoor);
             var validationResults = new List<ValidationResult>();
@@ -36,7 +34,7 @@ internal static class StukadoorApiExtension
             return Results.Ok(result);
         });
 
-        endpoints.MapPut(StukadorEndpoint, async ([FromBody] UpdateStukadoorDto stukadoor, [FromServices] IRequestHandler<DtoBase, Stukadoor> handler) =>
+        endpoints.MapPut(StukadorEndpoint, async ([FromBody] UpdateStukadoorDto stukadoor, [FromServices] IRequestHandler<DtoBase, ViewStukadoorDto> handler) =>
         {
             var context = new ValidationContext(stukadoor);
             var validationResults = new List<ValidationResult>();
@@ -54,7 +52,7 @@ internal static class StukadoorApiExtension
             return Results.Ok();
         });
 
-        endpoints.MapDelete("/stukadoor/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, Stukadoor> handler) =>
+        endpoints.MapDelete("/stukadoor/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, ViewStukadoorDto> handler) =>
         {
             if (!await handler.Delete(id))
             {

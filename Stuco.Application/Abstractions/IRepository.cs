@@ -1,4 +1,4 @@
-﻿using Stuco.Domain.Entities;
+﻿using Stuco.Domain.Abstractions;
 
 namespace Stuco.Application.Abstractions;
 

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Klant;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Klanten.Handlers;
 
-internal class KlantRequestHandler : IRequestHandler<DtoBase, Klant>
+internal class KlantRequestHandler : IRequestHandler<DtoBase, ViewKlantDto>
 {
     private readonly IRepository<Klant> _repository;
     private readonly IMapper _mapper;
@@ -17,11 +16,11 @@ internal class KlantRequestHandler : IRequestHandler<DtoBase, Klant>
         _repository = repository;
     }
 
-    public async Task<Klant> Create(DtoBase dto)
+    public async Task<ViewKlantDto> Create(DtoBase dto)
     {
         var klant = _mapper.Map<CreateKlantDto, Klant>((CreateKlantDto)dto);
         await _repository.AddAsync(klant);
-        return klant;
+        return _mapper.Map<ViewKlantDto>(klant);
     }
 
     public async Task<bool> Delete(int id)
@@ -30,20 +29,23 @@ internal class KlantRequestHandler : IRequestHandler<DtoBase, Klant>
         return true;
     }
 
-    public async Task<Klant> Get(int id)
+    public async Task<ViewKlantDto> Get(int id)
     {
-        return await _repository.GetByIdAsync(id);
+        var klant = await _repository.GetByIdAsync(id);
+        return _mapper.Map<ViewKlantDto>(klant);
     }
 
-    public async Task<IEnumerable<Klant>> GetAll()
+    public async Task<IEnumerable<ViewKlantDto>> GetAll()
     {
-        return await _repository.GetAllAsync();
+        var klanten = await _repository.GetAllAsync();
+        return _mapper.Map<IEnumerable<ViewKlantDto>>(klanten);
     }
 
     public async Task<bool> Update(DtoBase dto)
     {
         var klant = _mapper.Map<UpdateKlantDto, Klant>((UpdateKlantDto)dto);
         await _repository.AddAsync(klant);
+
         return true;
     }
 }

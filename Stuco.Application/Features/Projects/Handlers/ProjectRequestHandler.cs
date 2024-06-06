@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Project;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Projects.Handlers;
 
-internal class ProjectRequestHandler : IRequestHandler<DtoBase, Project>
+internal class ProjectRequestHandler : IRequestHandler<DtoBase, ViewProjectDto>
 {
     private readonly IRepository<Project> _repository;
     private readonly IMapper _mapper;
@@ -17,11 +16,11 @@ internal class ProjectRequestHandler : IRequestHandler<DtoBase, Project>
         _repository = repository;
     }
 
-    public async Task<Project> Create(DtoBase dto)
+    public async Task<ViewProjectDto> Create(DtoBase dto)
     {
         var project = _mapper.Map<CreateProjectDto, Project>((CreateProjectDto)dto);
         await _repository.AddAsync(project);
-        return project;
+        return _mapper.Map<ViewProjectDto>(project);
     }
 
     public async Task<bool> Delete(int id)
@@ -30,14 +29,16 @@ internal class ProjectRequestHandler : IRequestHandler<DtoBase, Project>
         return true;
     }
 
-    public async Task<Project> Get(int id)
+    public async Task<ViewProjectDto> Get(int id)
     {
-        return await _repository.GetByIdAsync(id);
+        var project = await _repository.GetByIdAsync(id);
+        return _mapper.Map<ViewProjectDto>(project);
     }
 
-    public async Task<IEnumerable<Project>> GetAll()
+    public async Task<IEnumerable<ViewProjectDto>> GetAll()
     {
-        return await _repository.GetAllAsync();
+        var project = await _repository.GetAllAsync();
+        return _mapper.Map<IEnumerable<ViewProjectDto>>(project);
     }
 
     public async Task<bool> Update(DtoBase dto)

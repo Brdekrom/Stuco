@@ -12,6 +12,8 @@ public class KlantProfile : Profile
         {
             CreateMap<CreateKlantDto, Klant>();
             CreateMap<UpdateKlantDto, Klant>();
+            CreateMap<Klant, ViewKlantDto>()
+            .ForMember(dest => dest.Projecten, opt => opt.MapFrom(src => src.Projecten.Select(p => p.Id).ToList()));
         });
     }
 }

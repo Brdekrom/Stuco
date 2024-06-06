@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Stukadoor;
 using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Features.Stukadoors.Handlers;
 
-internal class StukadoorRequestHandler : IRequestHandler<DtoBase, Stukadoor>
+internal class StukadoorRequestHandler : IRequestHandler<DtoBase, ViewStukadoorDto>
 {
     private readonly IRepository<Stukadoor> _repository;
     private readonly IMapper _mapper;
@@ -17,11 +16,11 @@ internal class StukadoorRequestHandler : IRequestHandler<DtoBase, Stukadoor>
         _repository = repository;
     }
 
-    public async Task<Stukadoor> Create(DtoBase dto)
+    public async Task<ViewStukadoorDto> Create(DtoBase dto)
     {
         var stukadoor = _mapper.Map<CreateStukadoorDto, Stukadoor>((CreateStukadoorDto)dto);
         await _repository.AddAsync(stukadoor);
-        return stukadoor;
+        return _mapper.Map<ViewStukadoorDto>(stukadoor);
     }
 
     public async Task<bool> Delete(int id)
@@ -30,14 +29,16 @@ internal class StukadoorRequestHandler : IRequestHandler<DtoBase, Stukadoor>
         return true;
     }
 
-    public async Task<Stukadoor> Get(int id)
+    public async Task<ViewStukadoorDto> Get(int id)
     {
-        return await _repository.GetByIdAsync(id);
+        var stukadoor = await _repository.GetByIdAsync(id);
+        return _mapper.Map<ViewStukadoorDto>(stukadoor);
     }
 
-    public async Task<IEnumerable<Stukadoor>> GetAll()
+    public async Task<IEnumerable<ViewStukadoorDto>> GetAll()
     {
-        return await _repository.GetAllAsync();
+        var stukadoren = await _repository.GetAllAsync();
+        return _mapper.Map<IEnumerable<ViewStukadoorDto>>(stukadoren);
     }
 
     public async Task<bool> Update(DtoBase dto)

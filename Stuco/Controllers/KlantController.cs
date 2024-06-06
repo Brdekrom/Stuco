@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Klant;
-using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
 
@@ -10,9 +8,9 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class KlantController : ControllerBase
 {
-    private readonly IRequestHandler<DtoBase, Klant> _handler;
+    private readonly IRequestHandler<DtoBase, ViewKlantDto> _handler;
 
-    public KlantController(IRequestHandler<DtoBase, Klant> handler)
+    public KlantController(IRequestHandler<DtoBase, ViewKlantDto> handler)
     {
         _handler = handler;
     }
@@ -44,7 +42,7 @@ public class KlantController : ControllerBase
         }
 
         var result = await _handler.Create(klant);
-        return Ok(result);
+        return new OkObjectResult(result);
     }
 
     [HttpPut]

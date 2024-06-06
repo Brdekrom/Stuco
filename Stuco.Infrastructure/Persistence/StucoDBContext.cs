@@ -17,6 +17,11 @@ public class StucoDBContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Klant>()
+            .HasMany(k => k.Projecten)
+            .WithOne(p => p.Klant)
+            .HasForeignKey(p => p.KlantId);
+
         modelBuilder.Entity<Project>()
             .HasOne(p => p.Klant)
             .WithMany(k => k.Projecten)

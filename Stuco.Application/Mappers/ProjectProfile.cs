@@ -12,6 +12,8 @@ public class ProjectProfile : Profile
         {
             CreateMap<CreateProjectDto, Project>();
             CreateMap<UpdateProjectDto, Project>();
+            CreateMap<Project, ViewProjectDto>()
+            .ForMember(dest => dest.Stukadoren, opt => opt.MapFrom(src => src.Stukadoren.Select(p => p.Id).ToList()));
         });
     }
 }

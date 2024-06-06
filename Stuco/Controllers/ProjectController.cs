@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Project;
-using Stuco.Domain.Entities;
 
 namespace Stuco.Api.Controllers;
 
@@ -10,9 +8,9 @@ namespace Stuco.Api.Controllers;
 [Route("api/[controller]")]
 public class ProjectController : ControllerBase
 {
-    private readonly IRequestHandler<DtoBase, Project> _handler;
+    private readonly IRequestHandler<DtoBase, ViewProjectDto> _handler;
 
-    public ProjectController(IRequestHandler<DtoBase, Project> requestHandler)
+    public ProjectController(IRequestHandler<DtoBase, ViewProjectDto> requestHandler)
     {
         _handler = requestHandler;
     }

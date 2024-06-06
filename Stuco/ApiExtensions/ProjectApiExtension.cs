@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos;
 using Stuco.Application.Dtos.Project;
-using Stuco.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Api.ApiExtensions;
@@ -13,17 +11,17 @@ public static class ProjectApiExtension
 
     public static void MapProjectEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet(ProjectEndpoint, async ([FromServices] IRequestHandler<DtoBase, Project> handler) =>
+        endpoints.MapGet(ProjectEndpoint, async ([FromServices] IRequestHandler<DtoBase, ViewProjectDto> handler) =>
         {
             return await handler.GetAll();
         });
 
-        endpoints.MapGet("/project/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, Project> handler) =>
+        endpoints.MapGet("/project/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, ViewProjectDto> handler) =>
         {
             return handler.Get(id);
         });
 
-        endpoints.MapPost(ProjectEndpoint, async ([FromBody] CreateProjectDto project, [FromServices] IRequestHandler<DtoBase, Project> handler) =>
+        endpoints.MapPost(ProjectEndpoint, async ([FromBody] CreateProjectDto project, [FromServices] IRequestHandler<DtoBase, ViewProjectDto> handler) =>
         {
             var context = new ValidationContext(project);
             var validationResults = new List<ValidationResult>();
@@ -36,7 +34,7 @@ public static class ProjectApiExtension
             return Results.Ok(result);
         });
 
-        endpoints.MapPut(ProjectEndpoint, async ([FromBody] UpdateProjectDto project, [FromServices] IRequestHandler<DtoBase, Project> handler) =>
+        endpoints.MapPut(ProjectEndpoint, async ([FromBody] UpdateProjectDto project, [FromServices] IRequestHandler<DtoBase, ViewProjectDto> handler) =>
         {
             var context = new ValidationContext(project);
             var validationResults = new List<ValidationResult>();
@@ -49,7 +47,7 @@ public static class ProjectApiExtension
             return Results.Ok(result);
         });
 
-        endpoints.MapDelete("/project/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, Project> handler) =>
+        endpoints.MapDelete("/project/{id:int}", async ([FromRoute] int id, [FromServices] IRequestHandler<DtoBase, ViewProjectDto> handler) =>
         {
             if (!await handler.Delete(id))
             {

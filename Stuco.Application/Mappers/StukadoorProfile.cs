@@ -12,6 +12,7 @@ public class StukadoorProfile : Profile
         {
             CreateMap<CreateStukadoorDto, Stukadoor>();
             CreateMap<UpdateStukadoorDto, Stukadoor>();
+            CreateMap<Stukadoor, ViewStukadoorDto>();
         });
     }
 }

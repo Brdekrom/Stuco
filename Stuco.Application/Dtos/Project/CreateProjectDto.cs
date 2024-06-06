@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Stuco.Application.Abstractions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Application.Dtos.Project;
 

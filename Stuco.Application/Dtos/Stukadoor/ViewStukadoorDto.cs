@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Application.Dtos.Stukadoor;
 
-public sealed class UpdateStukadoorDto : DtoBase
+public sealed class ViewStukadoorDto : DtoBase
 {
     [Required]
     public int Id { get; set; }

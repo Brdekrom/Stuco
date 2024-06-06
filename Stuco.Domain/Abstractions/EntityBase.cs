@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Stuco.Domain.Entities;
+namespace Stuco.Domain.Abstractions;
 
-public class EntityBase
+public abstract class EntityBase
 {
     [Required]
     public int Id { get; set; }

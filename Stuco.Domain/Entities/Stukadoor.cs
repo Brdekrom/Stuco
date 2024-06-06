@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Stuco.Domain.Abstractions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Domain.Entities;
 
-public class Stukadoor : Personeel
+public sealed class Stukadoor : Personeel
 {
     [MaxLength(20)]
     public string Name { get; set; }

@@ -1,17 +1,11 @@
 ﻿using Stuco.Application.Abstractions;
-using System.ComponentModel.DataAnnotations;
 
 namespace Stuco.Application.Dtos.Project;
 
-public sealed class UpdateProjectDto : DtoBase
+public sealed class ViewProjectDto : DtoBase
 {
-    [Required]
     public int Id { get; set; }
-
-    [Required]
-    [MinLength(2)]
     public string Name { get; set; }
-
-    [Required]
     public int KlantId { get; set; }
+    public List<int> Stukadoren { get; set; }
 }
