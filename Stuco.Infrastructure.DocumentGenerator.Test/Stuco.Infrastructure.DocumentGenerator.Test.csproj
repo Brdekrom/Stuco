@@ -20,4 +20,10 @@
         <Using Include="Xunit"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Stuco.Application\Stuco.Application.csproj" />
+      <ProjectReference Include="..\Stuco.Infrastructure.Data\Stuco.Infrastructure.Data.csproj" />
+      <ProjectReference Include="..\Stuco.Infrastructure.DocumentGenerator\Stuco.Infrastructure.DocumentGenerator.csproj" />
+    </ItemGroup>
+
 </Project>
