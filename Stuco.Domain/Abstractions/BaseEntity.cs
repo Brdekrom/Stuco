@@ -2,7 +2,7 @@
 
 namespace Stuco.Domain.Abstractions;
 
-public abstract class EntityBase
+public abstract class BaseEntity
 {
     [Required]
     public int Id { get; set; }

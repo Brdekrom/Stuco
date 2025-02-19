@@ -2,7 +2,7 @@
 
 namespace Stuco.Application.Abstractions;
 
-public interface IRepository<T> where T : EntityBase
+public interface IRepository<T> where T : BaseEntity
 {
     Task<T> GetByIdAsync(int id);
 

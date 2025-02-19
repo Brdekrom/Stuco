@@ -1,12 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Stuco.Application.Abstractions;
-using Stuco.Domain.Entities;
 using Stuco.Infrastructure.Persistence;
-using Stuco.Infrastructure.Repositories;
 
-namespace Stuco.Infrastructure;
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
@@ -26,9 +22,5 @@ public static class DependencyInjection
                 options.UseMySQL(configuration.GetConnectionString("DefaultConnection"));
             });
         }
-
-        services.AddScoped<IRepository<Klant>, KlantRepository>();
-        services.AddScoped<IRepository<Project>, ProjectRepository>();
-        services.AddScoped<IRepository<Stukadoor>, StukadoorRepository>();
     }
 }

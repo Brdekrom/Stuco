@@ -1,19 +1,10 @@
-using Stuco.Api.ApiExtensions;
-using Stuco.Application;
-using Stuco.Application.Mappers;
-using Stuco.Infrastructure;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddApplicationServices();
 
 builder.Services.AddAuthentication();
-
 builder.Services.AddAuthorization();
-
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -21,9 +12,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.IsDevelopment());
-
-builder.Services.AddAutoMapper(typeof(KlantProfile).Assembly);
-
+builder.Services.AddDocumentGenerator();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,11 +37,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapKlantEndpoints();
-
-app.MapProjectEndpoints();
-
-app.MapStukadoorEndpoints();
 
 app.Run();
