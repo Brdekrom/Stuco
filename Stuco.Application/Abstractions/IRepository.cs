@@ -1,16 +1,12 @@
-﻿using Stuco.Domain.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using Stuco.Domain.Abstractions;
+using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Abstractions;
 
-public interface IRepository<T> where T : BaseEntity
+public interface IRepository
 {
-    Task<T> GetByIdAsync(int id);
+    DbSet<Contractor> Contractors { get; }
 
-    Task<List<T>> GetAllAsync();
-
-    Task<T> AddAsync(T entity);
-
-    Task<T> UpdateAsync(T entity);
-
-    Task DeleteAsync(int id);
+    Task SaveChangesAsync();
 }

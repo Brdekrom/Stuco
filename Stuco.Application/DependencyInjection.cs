@@ -1,6 +1,6 @@
 ﻿using Stuco.Application.Abstractions;
 using Stuco.Application.Dtos.Klant;
-using Stuco.Application.Features.Klanten.Handlers;
+using Stuco.Application.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -8,8 +8,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IRequestHandler<DtoBase, ViewKlantDto>, KlantRequestHandler>();
-
+        services.AddScoped<ISession, StucoSession>();
         return services;
     }
 }

@@ -8,7 +8,8 @@ public class StucoDBContext : DbContext
     public StucoDBContext(DbContextOptions<StucoDBContext> options) : base(options)
     {
     }
-    public DbSet<Client> Klanten { get; set; }
+    
+    public DbSet<Contractor> Contractors { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

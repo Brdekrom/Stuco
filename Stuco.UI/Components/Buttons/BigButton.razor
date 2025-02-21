@@ -1,7 +1,30 @@
 @using MudBlazor
-<h3>@Text</h3>
+@inject NavigationManager Navigation
+
+<MudButton Color="Color.Primary"
+           Variant="Variant.Filled"
+           Size="Size.Large"
+           Class="big-register-button"
+           OnClick="ButtonClick">
+    <MudIcon Icon="@ButtonIcon" Size="Size.Large" />
+    <span class="ml-3">@ButtonText</span>
+</MudButton>
 
 @code {
-    [Parameter] public string Text { get; set; }
-    [Parameter] public IEventListener EventListener { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Click Me";
+    [Parameter] public string ButtonIcon { get; set; } = Icons.Material.Filled.TouchApp;
+    [Parameter] public string? NavigationUrl { get; set; } 
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    private async Task ButtonClick()
+    {
+        if (!string.IsNullOrEmpty(NavigationUrl))
+        {
+            Navigation.NavigateTo(NavigationUrl);
+        }
+        else if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
 }

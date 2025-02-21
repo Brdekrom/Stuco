@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Stuco.Application.Abstractions;
 using Stuco.Infrastructure.Persistence;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
-    public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, bool isDev)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, bool isDev)
     {
         if (!isDev)
         {
@@ -22,5 +23,9 @@ public static class DependencyInjection
                 options.UseMySQL(configuration.GetConnectionString("DefaultConnection"));
             });
         }
+
+        services.AddScoped<IRepository, StucoRepository>();
+        
+        return services;
     }
 }
