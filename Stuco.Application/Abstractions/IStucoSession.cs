@@ -2,7 +2,7 @@ using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Abstractions;
 
-public interface ISession
+public interface IStucoSession
 {
     public Contractor GetCurrentContractor();
 }

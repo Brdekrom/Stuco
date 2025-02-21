@@ -1,6 +1,72 @@
 @page "/UserDetails"
-<h3>UserDetails</h3>
+@using MudBlazor
+@using Stuco.Application.Abstractions
+@using Stuco.Domain.Entities
+@inject IStucoSession stucoSession
+@inject IRepository repository
+@inject NavigationManager Navigation
+
+<MudCard Class="contractor-card">
+    <MudCardContent>
+        <MudForm Model="@User" IsValid="@IsValid" @ref="form">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField Label="Company Name" @bind-Value="User.CompanyName" Required="true" />
+                </MudItem>
+
+                <MudItem xs="6">
+                    <MudTextField Label="First Name" @bind-Value="User.Contact.FirstName" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="Last Name" @bind-Value="User.Contact.LastName" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="Email" @bind-Value="User.Contact.Email" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="Phone Number" @bind-Value="User.Contact.PhoneNumber" Required="true" />
+                </MudItem>
+
+                <MudItem xs="6">
+                    <MudTextField Label="Bank Name" @bind-Value="User.FiscalInformation.BankName" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="Bank Account Number" @bind-Value="User.FiscalInformation.BankAccountNumber" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="KVK Number" @bind-Value="User.FiscalInformation.KvkNumber" Required="true" />
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField Label="BTW Number" @bind-Value="User.FiscalInformation.BtwNumber" Required="true" />
+                </MudItem>
+            </MudGrid>
+
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveContractor" Disabled="!IsValid">
+                Save
+            </MudButton>
+        </MudForm>
+    </MudCardContent>
+</MudCard>
 
 @code {
-    
+    private MudForm form;
+    private bool IsValid;
+    private Contractor User = new()
+    {
+        CompanyName = null,
+        Contact = null,
+        FiscalInformation = null
+    };
+
+    protected override void OnInitialized()
+    {
+        User = stucoSession.GetCurrentContractor();
+        base.OnInitialized();
+    }
+
+    private async Task SaveContractor()
+    {
+        await repository.SaveChangesAsync();
+        Navigation.NavigateTo("/");
+    }
 }

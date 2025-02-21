@@ -7,7 +7,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<ISession, StucoSession>();
+        services.AddScoped<IStucoSession, StucoStucoSession>();
         return services;
     }
 }

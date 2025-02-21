@@ -4,6 +4,10 @@ namespace Stuco.Domain.Entities;
 
 public class Contractor : BaseEntity
 {
+    public Contractor()
+    {
+        
+    }
     public required string CompanyName { get; set; }
     public required Contact Contact { get; set; }
     public required FiscalInformation FiscalInformation { get; set; }
