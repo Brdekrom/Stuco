@@ -7,5 +7,5 @@ public class Contractor : BaseEntity
     public required string CompanyName { get; set; }
     public required Contact Contact { get; set; }
     public required FiscalInformation FiscalInformation { get; set; }
-    //public List<Invoice>? Invoices { get; set; } = new List<Invoice>();
+    public List<Invoice>? Invoices { get; set; } = new List<Invoice>();
 }

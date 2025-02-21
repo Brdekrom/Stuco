@@ -7,25 +7,26 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration, bool isDev)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        if (!isDev)
+        var connectionString = configuration.GetConnectionString("StucoDB");
+
+        if (connectionString == null)
         {
-            services.AddDbContext<StucoDBContext>(options =>
-            {
-                options.UseInMemoryDatabase("InMemoryDb");
-            });
+            throw new ApplicationException("Missing connection string in configuration");
         }
-        else
+        
+        services.AddDbContext<StucoDbContext>(options =>
         {
-            services.AddDbContext<StucoDBContext>(options =>
-            {
-                options.UseMySQL(configuration.GetConnectionString("DefaultConnection"));
-            });
-        }
+            options.UseSqlServer(connectionString);
+        });
 
         services.AddScoped<IRepository, StucoRepository>();
         
+        using var scope = services.BuildServiceProvider().CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<StucoDbContext>();
+        dbContext.Database.Migrate();
+
         return services;
     }
 }

@@ -4,7 +4,7 @@ using Stuco.Domain.Entities;
 
 namespace Stuco.Infrastructure.Persistence;
 
-public class StucoRepository(StucoDBContext context) : IRepository
+public class StucoRepository(StucoDbContext context) : IRepository
 {
     public DbSet<Contractor> Contractors  => context.Contractors;
     public async Task SaveChangesAsync()

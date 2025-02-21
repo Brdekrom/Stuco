@@ -7,18 +7,24 @@
 
 <h1>Welkom @Gebruiker.Contact.FirstName</h1>
 
-<BigButton ButtonText="Mijn Gegevens - Werkt nog niet" NavigationUrl="/" />
+<BigButton ButtonText="Mijn Gegevens - In de maak" NavigationUrl="/" />
 <BigButton ButtonText="Maak factuur aan - Werkt nog niet" NavigationUrl="/" />
 <BigButton ButtonText="Facturen Raadplegen - Werkt nog niet" NavigationUrl="/" />
 
 
 @code
 {
-    public Contractor Gebruiker { get; set; }
+    private Contractor? Gebruiker { get; set; }
 
     protected override void OnInitialized()
     {
         Gebruiker = stucoSession.GetCurrentContractor();
+
+        if (Gebruiker == null)
+        {
+            Console.WriteLine("⚠ Gebruiker is null. Session might be missing.");
+        }
+
         base.OnInitialized();
     }
 }

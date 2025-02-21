@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Stuco.Api\Stuco.Api.csproj" />
     <ProjectReference Include="..\Stuco.Infrastructure.Data\Stuco.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\Stuco.UI\Stuco.UI.csproj" />
-    <ProjectReference Include="..\Stuco\Stuco.Api.csproj" />
   </ItemGroup>
 
 </Project>

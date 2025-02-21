@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddMudServices();
-builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.IsDevelopment());
+builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddDocumentGenerator();
 
 var app = builder.Build();

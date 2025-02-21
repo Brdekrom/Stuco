@@ -1,5 +1,4 @@
 ﻿using Stuco.Application.Abstractions;
-using Stuco.Application.Dtos.Klant;
 using Stuco.Application.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;

@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "Stuco", Version = "v1" });
 });
 
-builder.Services.AddInfrastructureServices(builder.Configuration, builder.Environment.IsDevelopment());
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddDocumentGenerator();
 var app = builder.Build();
 
