@@ -7,8 +7,8 @@ namespace Stuco.Infrastructure.Persistence;
 public class StucoRepository(StucoDbContext context) : IRepository
 {
     public DbSet<Contractor> Contractors  => context.Contractors;
-    public async Task SaveChangesAsync()
+    public async Task<int> SaveChangesAsync()
     {
-        await context.SaveChangesAsync();
+        return await context.SaveChangesAsync();
     }
 }

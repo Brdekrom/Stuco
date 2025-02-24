@@ -8,5 +8,5 @@ public interface IRepository
 {
     DbSet<Contractor> Contractors { get; }
 
-    Task SaveChangesAsync();
+    Task<int> SaveChangesAsync();
 }

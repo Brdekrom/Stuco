@@ -6,6 +6,8 @@
 @inject IStucoSession stucoSession
 @inject IRepository repository
 @inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+
 
 <PageTitle>Mijn Gegevens</PageTitle>
 
@@ -14,7 +16,7 @@
         <MudText Typo="Typo.h5" Class="font-weight-bold">Mijn Gegevens</MudText>
     </MudCardHeader>
     <MudCardContent>
-        <MudForm Model="@User" IsValid="@IsValid" @ref="form">
+        <MudForm Model="@User" @bind-IsValid="@IsValid" @ref="form">
             <MudGrid>
                 <MudItem xs="12">
                     <MudTextField 
@@ -54,20 +56,36 @@
                 </MudItem>
 
                 <MudItem xs="6">
-                    <MudTextField ReadOnly="true" Label="Banknaam" @bind-Value="User.FiscalInformation.BankName" Required="true"/>
+                    <MudTextField 
+                        ReadOnly="true" 
+                        Label="Banknaam" 
+                        @bind-Value="User.FiscalInformation.BankName" 
+                        Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField ReadOnly="true" Label="Bankrekkeningmummer" @bind-Value="User.FiscalInformation.BankAccountNumber" Required="true"/>
+                    <MudTextField
+                        ReadOnly="true" 
+                        Label="Bankrekkeningmummer" 
+                        @bind-Value="User.FiscalInformation.BankAccountNumber" 
+                        Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField ReadOnly="true" Label="KVK Nummer" @bind-Value="User.FiscalInformation.KvkNumber" Required="true"/>
+                    <MudTextField
+                        ReadOnly="true" 
+                        Label="KVK Nummer" 
+                        @bind-Value="User.FiscalInformation.KvkNumber" 
+                        Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField ReadOnly="true" Label="BTW Nummer" @bind-Value="User.FiscalInformation.BtwNumber" Required="true"/>
+                    <MudTextField
+                        ReadOnly="true" 
+                        Label="BTW Nummer" 
+                        @bind-Value="User.FiscalInformation.BtwNumber" 
+                        Required="true"/>
                 </MudItem>
             </MudGrid>
 
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveContractor" Disabled="!IsValid">
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveContractor" Disabled="@(!IsValid)">
                 Opslaan
             </MudButton>
         </MudForm>
@@ -92,7 +110,25 @@
 
     private async Task SaveContractor()
     {
-        await repository.SaveChangesAsync();
+        await form.Validate();
+
+        if (!IsValid)
+        {
+            Snackbar.Add("Formulier is niet geldig, controleer de invoer.", Severity.Error);
+            return;
+        }
+
+        var savedItems = await repository.SaveChangesAsync();
+
+        if (savedItems == 0)
+        {
+            Snackbar.Add("Er is iets misgelopen, probeer het later opnieuw", Severity.Error);
+            return;
+        }
+        
+        Snackbar.Add("Gegevens succesvol opgeslagen!", Severity.Success); 
+        await Task.Delay(3000); 
+
         Navigation.NavigateTo("/");
     }
 }
