@@ -1,4 +1,5 @@
 @page "/UserDetails"
+@using System.ComponentModel.DataAnnotations
 @using MudBlazor
 @using Stuco.Application.Abstractions
 @using Stuco.Domain.Entities
@@ -6,43 +7,68 @@
 @inject IRepository repository
 @inject NavigationManager Navigation
 
+<PageTitle>Mijn Gegevens</PageTitle>
+
 <MudCard Class="contractor-card">
+    <MudCardHeader>
+        <MudText Typo="Typo.h5" Class="font-weight-bold">Mijn Gegevens</MudText>
+    </MudCardHeader>
     <MudCardContent>
         <MudForm Model="@User" IsValid="@IsValid" @ref="form">
             <MudGrid>
                 <MudItem xs="12">
-                    <MudTextField Label="Company Name" @bind-Value="User.CompanyName" Required="true" />
+                    <MudTextField 
+                        Label="Bedrijfsnaam" 
+                        @bind-Value="User.CompanyName" 
+                        RequiredError="Bedrijfsnaam is verplicht"
+                        Required="true"/>
                 </MudItem>
 
                 <MudItem xs="6">
-                    <MudTextField Label="First Name" @bind-Value="User.Contact.FirstName" Required="true" />
+                    <MudTextField 
+                        Label="Voornaam" 
+                        @bind-Value="User.Contact.FirstName" 
+                        RequiredError="Voornaam is verplicht!"
+                        Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField Label="Last Name" @bind-Value="User.Contact.LastName" Required="true" />
+                    <MudTextField 
+                        Label="Achternaam" 
+                        @bind-Value="User.Contact.LastName"
+                        RequiredError="Achternaam is verplicht!"
+                        Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField Label="Email" @bind-Value="User.Contact.Email" Required="true" />
+                    <MudTextField 
+                        Label="Email" 
+                        @bind-Value="User.Contact.Email" 
+                        Validation="@(new EmailAddressAttribute() {ErrorMessage = "Ongeldig e-mailadres"})"
+                        Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField Label="Phone Number" @bind-Value="User.Contact.PhoneNumber" Required="true" />
+                    <MudTextField 
+                        Label="Telefoonnummer" 
+                        @bind-Value="User.Contact.PhoneNumber" 
+                        Validation="@(new PhoneAttribute() {ErrorMessage = "Ongeldig Telefoonnummer"})"
+                        Required="true"/>
                 </MudItem>
 
                 <MudItem xs="6">
-                    <MudTextField Label="Bank Name" @bind-Value="User.FiscalInformation.BankName" Required="true" />
+                    <MudTextField ReadOnly="true" Label="Banknaam" @bind-Value="User.FiscalInformation.BankName" Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField Label="Bank Account Number" @bind-Value="User.FiscalInformation.BankAccountNumber" Required="true" />
+                    <MudTextField ReadOnly="true" Label="Bankrekkeningmummer" @bind-Value="User.FiscalInformation.BankAccountNumber" Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField Label="KVK Number" @bind-Value="User.FiscalInformation.KvkNumber" Required="true" />
+                    <MudTextField ReadOnly="true" Label="KVK Nummer" @bind-Value="User.FiscalInformation.KvkNumber" Required="true"/>
                 </MudItem>
                 <MudItem xs="6">
-                    <MudTextField Label="BTW Number" @bind-Value="User.FiscalInformation.BtwNumber" Required="true" />
+                    <MudTextField ReadOnly="true" Label="BTW Nummer" @bind-Value="User.FiscalInformation.BtwNumber" Required="true"/>
                 </MudItem>
             </MudGrid>
 
             <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveContractor" Disabled="!IsValid">
-                Save
+                Opslaan
             </MudButton>
         </MudForm>
     </MudCardContent>
