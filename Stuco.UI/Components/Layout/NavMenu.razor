@@ -1,24 +1,6 @@
 ﻿@using MudBlazor
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Stuco.UI</a>
-    </div>
-</div>
-
-<input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <MudNavLink href="/" Icon="@Icons.Material.Filled.Home" IconColor="Color.Primary" Match="NavLinkMatch.All">
-                Home
-            </MudNavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <MudNavLink href="/UserDetails" Icon="@Icons.Material.Filled.People" IconColor="Color.Success">
-                Mijn Gegevens
-            </MudNavLink>
-        </div>
-    </nav>
-</div>
+<MudNavMenu Color="Color.Dark">
+    <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavLink Href="/userdetails" Match="NavLinkMatch.Prefix">Mijn Gegevens</MudNavLink>
+    <MudNavLink Href="/"  Match="NavLinkMatch.Prefix">About</MudNavLink>
+</MudNavMenu>

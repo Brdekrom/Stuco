@@ -1,11 +1,11 @@
 ﻿@page "/"
 @using Stuco.Application.Abstractions
 @using Stuco.Domain.Entities
-@inject IStucoSession stucoSession;
+@using MudBlazor
 
 <PageTitle>@Gebruiker.CompanyName</PageTitle>
 
-<h1>Welkom @Gebruiker.Contact.FirstName</h1>
+<MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Welkom @Gebruiker.Contact.FirstName</MudText>
 
 <BigButton ButtonText="Mijn Gegevens" NavigationUrl="/UserDetails" />
 <BigButton ButtonText="Maak factuur aan - Werkt nog niet" NavigationUrl="/" />
@@ -14,17 +14,8 @@
 
 @code
 {
+    [CascadingParameter]
     private Contractor? Gebruiker { get; set; }
 
-    protected override void OnInitialized()
-    {
-        Gebruiker = stucoSession.GetCurrentContractor();
-
-        if (Gebruiker == null)
-        {
-            Console.WriteLine("⚠ Gebruiker is null. Session might be missing.");
-        }
-
-        base.OnInitialized();
-    }
+    
 }
