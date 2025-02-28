@@ -4,7 +4,7 @@ using Stuco.Domain.Entities;
 
 namespace Stuco.Application.Services;
 
-public class StucoStucoSession(IRepository repository) : IStucoSession
+internal class StucoStucoSession(IRepository repository) : IStucoSession
 {
     public Contractor GetCurrentContractor()
     {
